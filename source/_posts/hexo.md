@@ -22,3 +22,19 @@ $ hexo server #
 $ hexo new "Hello Hexo" #
 $ hexo generate #
 ```
+
+## 部署
+### Openshift
+1. openshift上面部署nodejs的环境
+2. 安装 Hexo 的 Openshift 插件
+`$ npm install hexo-deployer-openshift --save`
+3. 编辑Hexo根目录 "_config.yml"的文件
+> deploy:  
+>    type: openshift  
+>    repo: xxx@xxx:~/git/xxx.git
+
+4. 部署  
+`$ hexo [d|deploy]`
+5. yes
+
+### github  
