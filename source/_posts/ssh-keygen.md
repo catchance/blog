@@ -5,10 +5,14 @@ tags:
   - linux命令
 categories: ssh
 ---
+> ssh-keygen生产RSA私钥
 
-## 用法
+<!--more-->  
 
-### Windows下生产ssh密钥文件
+### 用法
+---
+
+#### Windows下生产ssh密钥文件
 - 已经安装git,打开"Git Bash"
 - `ssh-keygen -t rsa -C "email@email.com"`
 - 提示输入key的名称，默认id_rsa

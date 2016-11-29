@@ -6,6 +6,10 @@ tags:
 categories: Qiniu
 ---
 
+> 本文主要内容包括：markdwon的基本语法和使用技巧。  
+
+<!--more-->
+
 [home](http://www.qiniu.com/)
 [七牛开发者中心](http://developer.qiniu.com/)
 

@@ -7,7 +7,7 @@
       </a>
     </div>
   {% endif %}
-
+<!--
   <div class="custom-logo-site-title">
     <a href="{{ config.root }}"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
@@ -16,6 +16,7 @@
     </a>
   </div>
   <p class="site-subtitle">{{ config.subtitle }}</p>
+-->
 </div>
 
 <div class="site-nav-toggle">
@@ -66,4 +67,3 @@
     </div>
   {% endif %}
 </nav>
-

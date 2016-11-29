@@ -9,16 +9,6 @@
 {% endblock %}
 
 {% block content %}
-
-<!--
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
-
-  {% include '_partials/pagination.swig' %}
--->
 <div class="home">
 <div class="banner">
     <div class="banner-text">

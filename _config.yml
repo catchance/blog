@@ -3,30 +3,30 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 11110000
-subtitle: Talk is cheap,Show me the code!
-description: Talk is cheap,Show me the code!
-author: 耿超
+title: 11110000 #网站标题
+subtitle: Talk is cheap,Show me the code! # 网站副标题
+description: Talk is cheap,Show me the code! # 网站描述
+author: 耿超 # 您的名字
 # language: zh-CN
-language: zh-Hans
-timezone: Asia/Shanghai
+language: zh-Hans # 网站使用的语言
+timezone: Asia/Shanghai # 网站时区。Hexo 预设使用您电脑的时区。时区列表
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://tech.xchance.xyz
-root: /
-permalink: :year/:month/:day/:title/
-permalink_defaults:
+url: http://tech.xchance.xyz # 网址
+root: /   # 网站根目录
+permalink: :year/:month/:day/:title/ #文章的 永久链接 格式 :year/:month/:day/:title/
+permalink_defaults: #永久链接中各部分的默认值
 
 # Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
-skip_render:
+source_dir: source # 资源文件夹，这个文件夹用来存放内容。
+public_dir: public # 公共文件夹，这个文件夹用于存放生成的站点文件。
+tag_dir: tags # 标签文件夹
+archive_dir: archives # 归档文件夹
+category_dir: categories # 分类文件夹
+code_dir: downloads/code # Include code 文件夹
+i18n_dir: :lang # 国际化（i18n）文件夹
+skip_render: README.md #跳过指定文件的渲染，您可使用 glob 来配置路径。
 
 # Writing
 new_post_name: :title.md # File name of new posts

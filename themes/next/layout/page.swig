@@ -42,7 +42,7 @@
         </div>
       </div>
       {% elif page.type === 'list' %}
-      <!--
+        <!--
         <div class="category-all-page">
           <div class="category-all">
             {{ list_posts() }}
@@ -51,7 +51,7 @@
         -->
 
         <section id="posts" class="posts-expand">
-          {% for post in site.posts %}
+          {% for post in site.posts.sort('-updated')  %}
             {{ post_template.render(post, true) }}
           {% endfor %}
         </section>
