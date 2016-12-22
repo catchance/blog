@@ -5,7 +5,9 @@ tags:
   - install
 categories: git
 ---
-> git的基本使用  
+> 本文包括git的简介、基本使用方法、部分原理。
+> 这么好用的工具必须安利大家使用，真的是越使用越觉得其强大的功能。
+> 用过图形界面和命令行，还是命令行下面使用的得心用手，推荐大家了解原理后使用命令行。
 
 <!--more-->  
 
@@ -43,7 +45,7 @@ $ git --version
 - 三种状态
   - 已提交（committed） 对应 .git directory(Repository) 工作区域
   - 已修改（modified） 对应 Working Directory工作区域
-  - 已暂存（staged/Index/） 对应 Index/Staging Area工作区域
+  - 已暂存（staged/Index） 对应 Index/Staging Area工作区域
 
 #### 配置
 - 系统级别：`/etc/gitconfig`,通过`git config --system`命令来配置
@@ -139,6 +141,13 @@ $ git diff --staged
 $ git difftool --tool-help
 ```
 
+#### `git show`命令
+- 显示具体的代码改动情况
+  ```bash
+  # 查看某次commit的修改内容
+  $ git show <commit-hash-id>
+  ```
+
 #### 提交更新
 ```bash
 # 提交更新
@@ -176,6 +185,8 @@ $ git log
 $ git log --oneline --graph --all --decorate
 # -2 用来显示最近两次提交，-p用来显示每次提交的内容差异
 $ git log -p -2
+# 查看某个文件的修改历史
+$ git log -p <filename>
 # 除了显示基本信息之外，还附带了每次 commit 的变化
 $ git log --stat
 # 可以指定使用不同于默认格式的方式展示提交历史
@@ -184,6 +195,12 @@ $ git log --pretty=oneline
 $ git log --graph
 # 显示某个路径或者文件的提交历史
 $ git log -- <path>
+```
+
+#### 查询引用变更的记录
+```bash
+# 查询操作的相关记录
+$ git reflog
 ```
 
 #### 撤销操作
@@ -314,6 +331,7 @@ $ git merge test
   1. master分支 只保留完全稳定的代码
   2. develop/next分支 后续开发和测试稳定性
   3. pu(proposed updates) 建议更新分支，不成熟的内容不适合放入master和develop的
+  4. test 测试部门使用的需要测试的分支
 - 短期分支，特性分支
   1. issue分支 特性分支
   2. hotfix分支 紧急修复补丁分支
@@ -358,24 +376,52 @@ $ git ls-remote <remote>
 #### 变基rebase
 整合分支的两种方式：rebase和merge
 merge:它会把两个分支的最新快照以及二者最近的共同祖先进行三方合并，合并的结果是生成一个新的快照并提交
-rebase:提取在分支中所做的补丁和修改，然后在需要合并的分支上再应用一次。
+rebase:提取在分支中所做的补丁和修改，然后在需要合并的分支上再应用一次。用于把一个分支的修改合并到当前分支。rebase用来修改本地私有提交历史的。
 ```bash
   # git rebase [basebranch] [topicbranch]
+  # 在git rebase后面加上参数<branch>，那么会先执行git checkout到这个分支，如果没有加分支则表示对当前分支进行操作
   $ git rebase master server
+  # git add 解决冲突后继续rebase
+  $ git rebase --continue  
+  # --abort参数来终止rebase的行动，并且"mywork" 分支会回到rebase开始前的状态。
+  $ git rebase --abort
+```
+```bash
+# 想维持树的整洁
+$ git fetch origin master
+$ git rebase origin/master
+$ git push
 ```
 > 不要对在你的仓库外有副本的分支执行rebase操作
 
+### 命令详解
+---
+#### `git reset`
+#### `git revert`
+Git Revert原理：根据你要回退的提交所做的改动做相反的改动，然后重新提交代码，使代码达到没有这些旧提交所能达到的状态。
+> 使用git reset是不影响远程分支的，一切都在本地发生。如果回退需要很快影响远程分支的，应该使用git revert
 
 ### 规范
 ---
 - 如果某些文件已经被跟踪了， 再放入到.gitinore可能会失效， 用以下命令来忽略
-```bash
-# 忽略文件
-$ git update-index --assume-unchanged filename
-# 撤销用：
-$ git update-index --no-assume-unchanged filename
-```
+
+  ```bash
+  # 忽略文件
+  $ git update-index --assume-unchanged filename
+  # 撤销用：
+  $ git update-index --no-assume-unchanged filename
+  ```
+
 - `git diff --check` 找出可能的空白错误并将它们列出来
+- 本地分支和远程分支的绑定（tracking)，加上 rebase 策略
+
+  ```bash
+  [branch "master"]
+      remote = origin
+      merge = refs/heads/master
+      rebase = true
+  ```
+
 - 解决多个问题，最好不要一次提交，根据任务分开提交。
 - 每次提交信息的模板
   > 修改的摘要（50 个字符或更少）
