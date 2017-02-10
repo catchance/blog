@@ -2,8 +2,7 @@
 title: atom
 toc: true
 tags:
-  - install
-  - atom
+  - 基础
   - 工具
 categories:
   - atom
@@ -30,9 +29,17 @@ date: 2016-12-21 17:16:59
 ---
 #### 概念
 
+#### 命令行
+```bash
+# atom命令的帮助信息
+$ atom -h
+# 打开多个文件操作
+$ atom [options] [path ...]
+```
+
 #### 快捷键
 ##### 常用
-`ctrl+shift+p` 快速搜索 执行命令
+`ctrl+shift+p` 快速搜索 执行命令面板
 `ctrl+shift+n` 新建界面窗口(New Window)
 `ctrl+n` 新建文件(New File)
 `ctrl+o` 打开文件(Open File)
@@ -41,24 +48,39 @@ date: 2016-12-21 17:16:59
 `ctrl+shift+t` 重新加载上次项目(Reopen Last Item)
 `ctrl+s` 保存文件
 `ctrl+shift+s` 另存为
-`ctrl+w` 关闭当前编辑文档
+`ctrl+w` `ctrl+F4` 关闭当前编辑文档
 `ctrl+shift+w` 关闭编辑器
 `ctrl+z` 撤销
 `ctrl+y` 重做
-`ctrl+g` 跳转到某行
 `ctrl+shift+l` 语法选择
 `ctrl+shift+m` markdown 预览模式
 `alt+shift+s` 查看文件相关语言的代码块(snippet)
 `ctrl + f` 搜索当前文件
-`ctrl+shift+f` 搜索整个项目
+`ctrl+shift+f` 搜4索整个项目
 `alt + ctrl + [` 代码折叠
 `alt + ctrl + ]` 代码展开
 `ctrl + /` 快速注释当前行
 `ctrl + [` 代码左缩进
 `ctrl + ]` 代码右缩进
-`ctrl + b` 快速跳转打开的文件
+`alt+1..`（数字）  打开相应标签
+`Ctrl+T` `Ctrl+P` **来搜索目录中的文件**
+`ctrl + b` **快速跳转打开的文件**
+`ctrl + shift + b` **快速跳转打开的文件**
+`Cmd+K ↓(方向键)` 分栏  
+`Cmd+K Cmd+↓(方向键)` 分栏间切换光标焦点  
+`f11` 全屏
+
+##### 编辑操作
+`ctrl+backspace` `ctrl+w` `alt+backspace` 'editor:delete-to-beginning-of-word'
+
+##### 目录操作
+`cmd-\` `cmd-k cmd-b` `tree-view:toggle` 显示(隐藏)目录树
+选中文件 + `a` 创建文件和目录  
+选中文件 + `m` 移动文件和目录  
+选中文件 + `delete` 删除文件和目录  
 
 ##### 光标移动快捷键
+`ctrl+g` **跳转到某行**
 
 #### atom设置代理
 修改 ~/.atom/.apmrc 文件
@@ -96,6 +118,8 @@ $ apm view <packge_name>
 $ apm list
 ```
 常用插件列表
+- markdown-scroll-sync markdown滚动插件
+- markdown-writer markdown插件
 - pretty-json json美化
 - git plus git插件
 - color-picker 颜色拾取器

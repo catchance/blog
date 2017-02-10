@@ -196,6 +196,10 @@ $ git log --graph
 # 显示某个路径或者文件的提交历史
 $ git log -- <path>
 ```
+*git log 命令乱码的问题解决方法*
+> git config --global i18n.commitencoding utf-8
+> git config --global i18n.logoutputencoding gbk
+> export LESSCHARSET=utf-8
 
 #### 查询引用变更的记录
 ```bash
@@ -212,6 +216,11 @@ $ git commit --amend
 $ git reset HEAD <path>
 # 重置工作区中的文件，从暂存区或者上次提交中重置文件。
 $ git checkout -- <path>
+```
+
+#### git cherry-pick用于把另一个本地分支的commit修改应用到当前分支。
+```bash
+git cherry-pick <commit id>
 ```
 
 ### 远程仓库
@@ -406,7 +415,7 @@ Git Revert原理：根据你要回退的提交所做的改动做相反的改动�
 - 如果某些文件已经被跟踪了， 再放入到.gitinore可能会失效， 用以下命令来忽略
 
   ```bash
-  # 忽略文件
+  # 忽略文件 这个可是实现Git的分两次提交
   $ git update-index --assume-unchanged filename
   # 撤销用：
   $ git update-index --no-assume-unchanged filename
