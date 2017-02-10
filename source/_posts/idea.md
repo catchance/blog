@@ -1,0 +1,173 @@
+---
+title: idea
+toc: true
+tags:
+  - install
+  - ieda
+  - 工具
+categories:
+  -idea
+date: 2016-12-26 10:40:10
+---
+> idea的简介和详细使用
+
+<!--more-->
+
+### 相关文档
+---
+- [Idea官网](http://www.jetbrains.com/idea/)
+
+#### 激活服务器
+- http://idea.qinxi1992.cn
+- http://www.iteblog.com/idea/key.php
+- http://idea.iteblog.com/key.php (上次激活可行)
+
+### 安装
+---
+#### Windows
+- [安装教程](http://www.cnblogs.com/exmyth/p/5554452.html)
+
+#### Linux
+
+#### Mac OS X
+
+### 概述
+---
+#### IDEA内存优化
+因机器本身的配置而配置：
+%IDEA_HOME%\bin\idea.exe.vmoptions
+> -Xms64m
+> -Xmx256m
+> -XX:MaxPermSize=92m
+> -ea
+> -server
+> -Dsun.awt.keepWorkingSetOnMinimize=true
+
+### 效率快捷键的使用
+---
+> - 使用 `|` 进行windows 和 osx 区分  
+> - `cmd` 相当于 mac中commond键
+
+#### 查询快捷键  
+`Shift+Shift` **查询所有地方**  
+`CTRL+N`  查找类  
+`CTRL+SHIFT+N`  查找文件  
+`CTRL+SHIFT+ALT+N` 查找类中的方法或变量  
+`CTRL+G`  定位行  
+`CTRL+F`  在当前窗口查找文本  
+`CTRL+SHIFT+F`  在指定窗口查找文本  
+`CTRL+R`   在 当前窗口替换文本  
+`CTRL+SHIFT+R`  在指定窗口替换文本  
+`Ctrl+E` 最近打开的文件  
+`F3`  向下查找关键字出现位置  
+`SHIFT+F3`  向上一个关键字出现位置  
+`Alt＋F3` 可以快速寻找  
+`F4`   查找变量来源  
+`Ctrl＋Q` 可以看JavaDoc  
+`Alt+Q` 可以不需要移动代码就能查看当前方法地声明。连续按两次会显示当前所编辑的类名  
+
+#### 导航快捷键
+`Ctrl+Tab` **快速切换**  
+`CTRL+Z`  倒退  
+`CTRL+SHIFT+Z`  向前  
+`CTRL+ALT+F12`  资源管理器打开文件夹  
+`Ctrl＋F12` 可以显示当前文件的结构  
+`ALT+ ←/→`  切换代码视图  
+`CTRL+ALT ←/→`  返回上次编辑的位置  
+`ALT+ ↑/↓`  在方法间快速移动定位  
+`CTRL+H`  显示类结构图  
+`Ctrl+Alt+H` 显示该方法被调用的情况 Call Hierarchy  
+`CTRL+ALT+B` 查看抽象方法的具体实现  
+`CTRL+B` 快速打开光标处的类或方法  
+`CTRL+鼠标点击方法`  进入到抽象方法  
+`CTRL+ALT+鼠标点击方法`  进入到具体的方法实现  
+`F2 或Shift+F2` 高亮错误或警告快速定位  
+`Alt + F12` 打开Terminal终端   
+
+#### 自动代码
+`ALT+回车`  **导入包,自动修正**  
+`CTRL+ALT+L`  格式化代码  
+`CTRL+ALT+I`  自动缩进  
+`CTRL+ALT+O`  优化导入的类和包  
+`ALT+INSERT`  **生成代码(如GET,SET方法,构造函数等)**  
+`CTRL+SHIFT+SPACE` **自动补全代码**  
+`CTRL+SPACE`  代码提示  
+`CTRL+ALT+SPACE`  类名或接口名提示  
+`CTRL+P`   方法参数提示  
+`CTRL+J`   自动代码  
+`Ctrl+Shift+Enter`  **自动完成**  
+`Ctrl+Shift+A` **发号施令**  
+`Template/Postfix +Tab` **代码生成**  
+
+#### 编辑快捷键
+`Ctrl＋O` 可以选择父类的方法进行重写  
+`Ctrl＋Alt＋V` 可以引入变量。例如把括号内的SQL赋成一个变量  
+`Ctrl＋Alt＋T` 可以把代码包在一块内，例如try/catch  
+`CTRL+D`  复制行  
+`CTRL+X`  剪切,删除行  
+`Ctrl+Shift+U` 选中字母大小写快速切换  
+
+#### 调试Debug
+`F7` Step Into 相当于eclipse的f5就是  进入到代码  
+`Alt+Shift+F7` Force Step Into 这个是强制进入代码  
+`F8` Step Over 相当于eclipse的f6跳到下一步  
+`Alt+F8` debug时选中查看值  
+`Shift+F8` Step Out  相当于eclipse的f8跳到下一个断点，也相当于eclipse的f7跳出函数  
+`F9` resume programe 恢复程序  
+`Atl+F9` Run To Cursor 运行到光标处  
+`Ctrl+Shift+F9`  debug运行java类  
+`Alt+F10` show execution point 显示执行断点  
+`Ctrl+Shift+F10` 正常运行java类  
+`Ctrl+F1` 显示结果  
+
+#### 其他
+`Ctrl+Alt+S` 打开设置  
+`Ctrl+Alt+Shift+S` 打开项目设置  
+`CTRL+/`  注释//  
+`CTRL+SHIFT+/`  注释/*...*/  
+`ESC`  光标返回编辑框  
+`SHIFT+ESC`  **光标返回编辑框,关闭无用的窗口**  
+`CTRL+F4`  非常重要下班都用  
+`ALT+1..`（数字）  快速打开工程面板  
+`CTRL+Q`   显示注释文档  
+`CTRL+W`  **选中代码，连续按会有其他效果**  
+
+#### 重构
+`Ctrl+Shift+Alt+T`  **重构一切**  
+
+### 使用技巧
+---
+- Idea中执行RUN=>Reload Changed Class,就可调试修改后程序 。
+- File->Settings->Code Style->General中，修改“Right margin (columns)”的值即可改变代码行宽度的限制。
+- File->Settings->Editor->General->Code Completion Case sensitive completion: None (不区分大小写)
+- Help->Edit Custom Properties...->keymap.windows.as.meta=true 解决windows下面映射Meta键的问题,快捷键和系统快捷键冲突可以通过禁用Win系统快捷键方式解决。
+> 需要禁用的快捷键`Win+1F`
+- Setting->Inspections->Serialization issues->Serializable class without ’serialVersionUID’ Intellij IDEA 自动生成 serialVersionUID
+- Editor -> Live Templates output -> 新建soutl Prints a line separator Template text:System.out.println("---------------------------------------------------------");快捷输入。
+
+#### 快速输入
+sout
+soutp
+soutv
+soutm
+soutl
+serr
+soutf
+
+### 插件
+---
+[插件仓库][0]
+[Key Promoter][1]
+[.ignore][2]
+[Jindent][3]
+[CheckStyle]
+[FindBugs]
+[javadoc]
+[Maven Helper]
+[GsonFormat]
+[IdeaVim]
+
+[0]:http://plugins.jetbrains.com/
+[1]:http://plugins.jetbrains.com/plugin?pr=idea&pluginId=1003
+[2]:http://plugins.jetbrains.com/plugin/7495?pr=objc
+[3]:http://www.jindent.com
