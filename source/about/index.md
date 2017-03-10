@@ -36,18 +36,29 @@ type: about
 **时间：** 2016/05/09-目前
 **技术栈：**
 - 前端：HTML/CSS/JavaScript/JQuery/ajax/Angularjs
-- 后台：Java/Spring/Struts2/Hibernate3/SpringMVC/Spring Boot/Redis/nginx/netty/
+- 后台：Java/Spring/Struts2/Hibernate3/SpringMVC/Spring Boot/Redis/nginx/netty/spring cloud微服务解决方案框架
 - 存储：Mysql/mongodb/SQL结构化查询语言
 - 工具：idea/eclipse/svn/git/gitlab/MongoChef mongodb客户端/SmartGit/maven/Nexus(Maven私服)/JIRA（项目与事务跟踪工具）/Jenkins 集成构建工具/阿里云的企业邮箱/tomcat 服务器/NavicatforMySQL mysql客户端/postman 模拟Http发送工具/fiddler4 抓包工具/apidoc
 - 第三方类库：poi/dom4j/pinyin4j/junit/rest-assured/jedis/morphia/fastjson/logback/hibernate/quartz
 
 ##### 2017/2/6- 目前
 **项目：**
+- 药企圈交接
+- eDA1.1
 
-**描述：** 增加年会红包的相关功能，药企圈的通讯录的优化，防止年会中多人抢红包拉取通讯录出现
+**描述：** 增加年会红包的相关功能，药企圈的通讯录的优化，防止年会中多人抢红包拉取通讯录出现,交接药企圈的相关，全面接受eda项目，负责eda1.1项目的开发
 
 **责任描述：**
 - 年会红包相关的接口实现
+- eda素材中添加对于音频文件的支持
+- da.xml文件描述信息的增加
+- 增加对于dda格式的支持，添加热区备注，回调
+- 增加da的相关评价，品种组评价，客户评价，da整体评价
+- 对于素材添加备注功能
+- 增加对于演示中的画笔记录的保存，回放的功能
+- 增加学习模式下面的留言反馈功能
+- 优化da的文件协议，增加协议的版本信息
+- 将项目往spring cloud中集成
 
 ##### 2016/12/14-2017/1/22
 **项目：**
