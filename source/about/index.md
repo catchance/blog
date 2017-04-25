@@ -41,7 +41,21 @@ type: about
 - 工具：idea/eclipse/svn/git/gitlab/MongoChef mongodb客户端/SmartGit/maven/Nexus(Maven私服)/JIRA（项目与事务跟踪工具）/Jenkins 集成构建工具/阿里云的企业邮箱/tomcat 服务器/NavicatforMySQL mysql客户端/postman 模拟Http发送工具/fiddler4 抓包工具/apidoc
 - 第三方类库：poi/dom4j/pinyin4j/junit/rest-assured/jedis/morphia/fastjson/logback/hibernate/quartz
 
-##### 2017/2/6- 目前
+
+##### 2017/4/11- 2017/4/21
+**项目：**
+- drugorg
+- signed
+- eda
+
+**描述：** 接手drugorg、signed、eda三个项目，完成项目架构改造，使用spring cloud的生态圈，
+
+**责任描述：**
+- 接手drugorg、signed、eda项目后台
+- 完成drugorg消费者模式改造，使用ribbon
+- 完成zuul网关的改造
+
+##### 2017/2/6- 2017/4/11
 **项目：**
 - 药企圈交接
 - eDA1.1

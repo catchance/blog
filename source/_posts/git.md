@@ -381,6 +381,10 @@ $ git ls-remote <remote>
     # 删除分支
     $ git push origin --delete serverfix
   ```
+- 本地新建分支, 把此分支放入其中
+  ```bash
+    $ git checkout -b <本地分支名> origin/<远程分支名>
+  ```
 
 #### 变基rebase
 整合分支的两种方式：rebase和merge
