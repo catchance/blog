@@ -41,6 +41,30 @@ type: about
 - 工具：idea/eclipse/svn/git/gitlab/MongoChef mongodb客户端/SmartGit/maven/Nexus(Maven私服)/JIRA（项目与事务跟踪工具）/Jenkins 集成构建工具/阿里云的企业邮箱/tomcat 服务器/NavicatforMySQL mysql客户端/postman 模拟Http发送工具/fiddler4 抓包工具/apidoc
 - 第三方类库：poi/dom4j/pinyin4j/junit/rest-assured/jedis/morphia/fastjson/logback/hibernate/quartz
 
+##### 2017/6/27 - 目前
+**项目：**
+- drugorg 1.7 、 1.7.1 、 1.7.2
+
+**描述：** 完成药企圈1.7版本的开发
+
+**责任描述：**
+
+
+##### 2017/4/21 - 2017/6/27
+**项目：**
+- drugorg 1.7 、 1.7.1 、 1.7.2
+- signed
+
+**描述：** 完成药企圈1.7版本的开发
+
+**责任描述：**
+- 签到服务的签到地点查询优化（智能排序）
+- drugorg轻应用管理平台、轻应用服务相关
+- 医药代表邀请医生好友功能
+- 添加医药代表分管关系审核功能（分管品种审核员角色）
+- 完善推送通知功能
+- 添加互助社区"热门"、"精华"栏目，重点一目了然
+- 接受药企圈互助社区的项目
 
 ##### 2017/4/11- 2017/4/21
 **项目：**
