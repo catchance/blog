@@ -120,6 +120,8 @@ $ apm list
 常用插件列表
 - markdown-scroll-sync markdown滚动插件
 - markdown-writer markdown插件
+- markdown-toc Atom TOC插件
+- markdown-document 显示md文档的目录
 - pretty-json json美化
 - git plus git插件
 - color-picker 颜色拾取器

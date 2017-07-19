@@ -216,9 +216,14 @@ submenu "Ubuntu" {
 }
 
 #本地磁盘启动
-menuentry "Boot HDD" {
-  set root=(hd0)
+menuentry "Boot HDD(hd1)" {
+  set root=(hd1)
   chainloader +1
+}
+
+menuentry "搜索windows的bootmgr启动" {
+    search --file /bootmgr --set=root
+    chainloader +1
 }
 
 #重启
