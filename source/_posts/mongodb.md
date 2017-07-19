@@ -387,6 +387,9 @@ db.col.find({},{"title":1,_id:0}).skip(1).limit(1)
 db.col.find({},{"title":1,_id:0}).sort({"likes":-1})
 ```
 
+#### MongoDB 索引
+
+
 ### 参考
 - [官网](https://www.mongodb.com/)
 - [runoob.com >> MongoDB 教程](http://www.runoob.com/mongodb/mongodb-tutorial.html)
