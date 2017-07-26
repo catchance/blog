@@ -99,7 +99,20 @@ Capped collections是高性能自动的维护对象的插入顺序。它非常�
 能进行更新，然而，对象不会增加存储空间。如果增加，更新就会失败 。
 数据库不允许进行删除。使用drop()方法删除collection所有的行。
 注意: 删除之后，你必须显式的重新创建这个collection。
-在32bit机器中，capped collection最大存储为1e9( 1X109)个字节。
+在32bit机器中，capped collection最大存储为1e9( 1X109)个字节。  
+判断集合是否为固定集合:`db.cappedLogCollection.isCapped()`
+将已存在的集合转换为固定集合:`db.runCommand({"convertToCapped":"posts",size:10000})`  
+固定集合文档按照插入顺序储存的,默认情况下查询就是按照插入顺序返回的,也可以使用$natural调整返回顺序。
+`db.cappedLogCollection.find().sort({$natural:-1})`
+
+**固定集合属性及用法**
+**属性**
+- 属性1:对固定集合进行插入速度极快
+- 属性2:按照插入顺序的查询输出速度极快
+- 属性3:能够在插入最新数据时,淘汰最早的数据
+**用法**
+- 用法1:储存日志信息
+- 用法2:缓存一些少量的文档
 
 - **元数据**
 
@@ -230,6 +243,40 @@ $ show tables 显示集合
 $ db.xxx.drop()
 ```
 
+#### 数据导入导出和备份
+- 导入cvs
+```cmd
+"C:\Program Files\MongoDB\Server\3.2\bin\mongoimport" /d drugOrg /c testtest /type:csv /headerline  /file D:\assign.csv
+"C:\Program Files\MongoDB\Server\3.2\bin\mongoimport" /d drugOrg /c t_signed /type:csv /headerline  /file D:\t_signed.csv
+```
+
+- 导出cvs
+```cmd
+"C:\Program Files\MongoDB\Server\3.2\bin\mongoexport"  --csv -d drugOrg -c t_signed -o D:\t_signed.csv
+"C:\Program Files\MongoDB\Server\3.2\bin\mongoexport"  --csv -f _id,userId,companyId,time,singedTagId,department,day,orgId,userName,deviceId,tagNameList,treePath,headPicUrl,addressName,coordinate,address,visitId,country,province,city -d drugOrg -c t_signed -o D:\t_signed.csv
+```
+
+- 还原数据库
+```cmd
+"C:\Program Files\MongoDB\Server\3.2\bin\mongorestore" -d drugOrg --drop D:\drugOrg\drugOrg
+```
+
+#### ObjectId
+ObjectId 是一个12字节 BSON 类型数据，有以下格式：
+- 前4个字节表示时间戳
+- 接下来的3个字节是机器标识码
+- 紧接的两个字节由进程id组成（PID）
+- 最后三个字节是随机数。
+MongoDB中存储的文档必须有一个"\_id"键。这个键的值可以是任何类型的，默认是个ObjectId对象。
+在一个集合里面，每个文档都有唯一的"\_id"值，来确保集合里面每个文档都能被唯一标识。
+MongoDB采用ObjectId，而不是其他比较常规的做法（比如自动增加的主键）的主要原因，因为在多个 服务器上同步自动增加主键值既费力还费时。
+```js
+> newObjectId = ObjectId()
+> myObjectId = ObjectId("5349b4ddd2781d08c09890f4")
+> ObjectId("5349b4ddd2781d08c09890f4").getTimestamp() // 获取时间戳
+> new ObjectId().str // ObjectId 转换成字符串
+```
+
 #### MongoDB  插入文档
 ```json
 # 插入文档
@@ -354,6 +401,46 @@ db.col.find({"k1":"v1", "k2":"v2"}).pretty()
   }).pretty()
 ```
 
+- 使用 explain() 查询分析
+```js
+db.users.find({gender:"M"},{user_name:1,_id:0}).explain()
+```
+现在，我们看看这个结果集的字段：
+  - indexOnly: 字段为 true ，表示我们使用了索引。
+  - cursor：因为这个查询使用了索引，MongoDB 中索引存储在B树结构中，所以这是也使用了 BtreeCursor 类型的游标。如果没有使用索引，游标的类型是 BasicCursor。这个键还会给出你所使用的索引的名称，你通过这个名称可以查看当前数据库下的system.indexes集合（系统自动创建，由于存储索引信息，这个稍微会提到）来得到索引的详细信息。
+  - n：当前查询返回的文档数量。
+  - nscanned/nscannedObjects：表明当前这次查询一共扫描了集合中多少个文档，我们的目的是，让这个数值和返回文档的数量越接近越好。
+  - millis：当前查询所需时间，毫秒数。
+  - indexBounds：当前查询具体使用的索引。
+
+```js
+// 可以使用 hint 来强制 MongoDB 使用一个指定的索引。
+db.users.find({gender:"M"},{user_name:1,_id:0}).hint({gender:1,user_name:1}).explain()
+```
+
+#### MongoDB 正则表达式
+- 正则表达式是使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。
+- 许多程序设计语言都支持利用正则表达式进行字符串操作。
+- MongoDB 使用 $regex 操作符来设置匹配字符串的正则表达式。
+- MongoDB使用PCRE (Perl Compatible Regular Expression) 作为正则表达式语言。
+- 不同于全文检索，我们使用正则表达式不需要做任何配置。
+```js
+db.posts.find({post_text:{$regex:"runoob",$options:"$i"}})
+```
+**数组元素使用正则表达式**  
+我们还可以在数组字段中使用正则表达式来查找内容。
+
+**优化正则表达式查询**
+- 如果你的文档中字段设置了索引，那么使用索引相比于正则表达式匹配查找所有的数据查询速度更快。
+- 如果正则表达式是前缀表达式，所有匹配的数据将以指定的前缀字符串为开始。例如： 如果正则表达式为 ^tut ，查询语句将查找以 tut 为开头的字符串。
+
+**注意：**
+- 正则表达式中使用变量。一定要使用eval将组合的字符串进行转换，不能直接将字符串拼接后传入给表达式。否则没有报错信息，只是结果为空！实例如下：
+```js
+var name=eval("/" + 变量值key +"/i");
+title:eval("/"+title+"/i")    // 等同于 title:{$regex:title,$Option:"$i"}   
+```
+
 #### MongoDB 条件操作符
 
 |操作|	格式 |	范例 |	RDBMS中的类似语句 |
@@ -369,6 +456,52 @@ db.col.find({"k1":"v1", "k2":"v2"}).pretty()
 ```js
 // 查询col集合中 title 值类型为字符串的所有数据
 db.col.find({"title" : {$type : 2}})
+```
+
+#### MongoDB简单查询操作符
+| 操作 | 说明 | 示例 |
+|--|--|--|
+|$eq |  用来等值条件过滤某一个key的值 | db.col.find({"name":{$eq:"steven"}}) |
+|$gt |  用来判断某个key值大于某个指定的值 | db.col.find({"age":{$gt:19}}) |
+|$gte |  用来判断某个key值大于等于某个指定的值 | db.col.find({"age":{$gte:19}}) |
+|$lt |  用来判断某个key值小于某个指定的值 | db.col.find({"age":{$lt:20}}) |
+|$lte |  用来判断某个key值小于等于某个指定的值 | db.col.find({"age":{$lte:20}}) |
+|$ne |  用来不等值条件过滤某一个key的值。 | db.col.find({"name":{$ne:"steven"}}) |
+|$in |  用来指定某个key的值在指定的离散的值域内 | db.col.find({"name":{$in:["steven","jack"]}}) |
+|$nin |  用来指定key值不存在某个指定的离散值域内 | db.col.find({"name":{$nin:["steven","jack"]}}) |
+|$or |  任意组合不同的查询条件（可以针对任意key的限制条件），只要满足任意组合条件中的一个即可。 | db.col.find({"$or" : [{"name":"steven"},{"age":20}]}) |
+|$and |  任意组合不同的查询条件（可以针对任意key的限制条件），并且必须同时满足所有条件。 | db.col.find({"$and" : [{"name":"steven"},{"age":20}]}) |
+|$not |  元条件语句，需要和其他条件语句组合使用。 | db.col.find({"age":{"$not":{"$lt":20}}}) |
+|$nor |  表示所有条件均不能满足则返回 | db.col.find({"$nor" : [{"name":"steven"},{"age":20}]}) 凡是 name 为 steven 或者 age 为 20 的全部过滤掉 |
+|$exists |  查询不包含某一个属性（key）的文档 | db.col.find({"name":{"$exists":true}}) |
+|$mod |  取余操作符，筛选经过区域操作后，结果符合条件的文档。 | db.col.find({"age" : {"$mod" : [4,0]}}) 返回age的值和 4 求余后 结果为 0 的数据 |
+|$regex |  筛选值满足正则表达式的文档。 | db.col.find({"name" : {$regex:"stev*",$options:"i"}}) |
+|$text |  针对建立了全文索引的字段，实施全文检索匹配。 | db.col.find({"$text":{$search:"steven",$language:"en"}}) |
+|$where |  强大的查询关键字，但性能较差，可以传入js表达式或js函数来筛选数据。 | 见下面 |
+|$all |  数组查询操作符，查询条件是一个数组，被查询的字段也是一个数组，要求被查询的数组类型的字段要是查询条件数组的超集（即大数组要包含小数组） | db.col.find({"values":{$all:["a","b"]}}) |
+|$elemMatch |  数组查询操作符，用来指定数组的每一个元素同时满足所罗列的条件，如果不指定，则条件会是或的关系 | db.blog.find({"comments":{"$elemMatch":{"author":"joe","score":{"$gte":5}}}}) 查joe发表的5分以上的评论，注意comments为二维数组 |
+|$size |  用于某个数组类型的key对应值的数量满足要求。 | db.col.find({"values":{$size : 3}}) |
+|$comment |  在查询、更新或其他操作执行过程中，可以通过添加$comment操作符添加评论。改评论会被记录在日志中，用于后续分析。 | db.col.find( { <query>, $comment: <comment> } ) |
+|$geoWithin |  这个操作符基于2d 空间索引，首先要针对文档的某个字段建立一个2d的空间索引，然后利用此操作符，可以在一个2d空间范围内指定一个多变形，$geoWithin操作符就是查询出包含在多变形范围内的点。 | |
+|$geoIntersects |  同样基于2d空间索引，计算当前的空间范围和指定的geo多变形取交集。 |  |
+|$near |  基于2d空间索引，指定一个点，返回该点有近及远的所有的点。 |  |
+|$nearSphere |   基于2d空间索引，指定一个点，由近及远的返回所有的点，和$near操作符不同的是计算距离的方式 $nearSphere计算的是球面距离。$near计算的是坐标距离。 | |
+| $  |  如果文档中某个value是数组类型，通过 $ 操作符可以指定数组字段的投影，返回数组字段中第一个匹配的那个元素，相当于截断了原来的整个数组，只返回第一个值。 | db.col.find({"values":{$eq:"a"}},{"values.$":1}) 会返回values数组中，第一个和"a"相等的元素，也就是返回"a" |
+|$meta |  和全文索引 text index 组合使用，针对一个带有全文索引的元素，指定改操作符，可以返回和查询条件相似的分数，分数越高，匹配度越高。 | |
+|$slice |  数组类型字段的投影操作，返回原来数据的一个子集.针对一个数组，其有如下几种返回子集的方式： | 示例如下 |
+```js
+// $where
+db.op_test.find({"$where":function(){
+  for(var index in this) {
+      if(this[index] == "steven") {
+            return true;
+      }
+    }
+    return false;
+}})
+
+// $slice
+db.blog.find({"comments":{"$slice":[10,5]}})
 ```
 
 #### MongoDB Limit与Skip方法
@@ -388,9 +521,263 @@ db.col.find({},{"title":1,_id:0}).sort({"likes":-1})
 ```
 
 #### MongoDB 索引
+索引是特殊的数据结构，索引存储在一个易于遍历读取的数据集合中，索引是对数据库表中一列或多列的值进行排序的一种结构
+```js
+// 建立索引的语法： db.COLLECTION_NAME.ensureIndex({KEY:1})
+db.col.ensureIndex({"title":1})
+db.col.ensureIndex({"title":1,"description":-1}) // 类似于关系数据库中的复合索引
+db.col.ensureIndex({"k1": 1, "k2": -1}, {"background": true})
+```
 
+|Parameter |	Type |	Description |
+|--|--|--|
+|background |	Boolean |	建索引过程会阻塞其它数据库操作，background可指定以后台方式创建索引，即增加 "background" 可选参数。 "background" 默认值为false。 |
+|unique |	Boolean |	建立的索引是否唯一。指定为true创建唯一索引。默认值为false. |
+|name |	string |	索引的名称。如果未指定，MongoDB的通过连接索引的字段名和排序顺序生成一个索引名称。 |
+|dropDups |	Boolean |	在建立唯一索引时是否删除重复记录,指定 true 创建唯一索引。默认值为 false. |
+|sparse |	Boolean |	对文档中不存在的字段数据不启用索引；这个参数需要特别注意，如果设置为true的话，在索引字段中不会查询出不包含对应字段的文档.。默认值为 false. |
+|expireAfterSeconds |	integer |	指定一个以秒为单位的数值，完成 TTL设定，设定集合的生存时间。|
+|v |	index | version	索引的版本号。默认的索引版本取决于mongod创建索引时运行的版本。|
+|weights |	document |	索引权重值，数值在 1 到 99,999 之间，表示该索引相对于其他索引字段的得分权重。|
+|default_language |	string |	对于文本索引，该参数决定了停用词及词干和词器的规则的列表。 默认为英语 |
+|language_override |	string |	对于文本索引，该参数指定了包含在文档中的字段名，语言覆盖默认的language，默认值为 language. |
+
+**索引限制**
+- 额外开销
+每个索引占据一定的存储空间，在进行插入，更新和删除操作时也需要对索引进行操作。所以，如果你很少对集合进行读取操作，建议不使用索引。
+- 内存(RAM)使用
+由于索引是存储在内存(RAM)中,你应该确保该索引的大小不超过内存的限制。
+如果索引的大小大于内存的限制，MongoDB会删除一些索引，这将导致性能下降。
+- 查询限制
+索引不能被以下的查询使用：
+正则表达式及非操作符，如 $nin, $not, 等。
+算术运算符，如 $mod, 等。
+- $where 子句
+所以，检测你的语句是否使用索引是一个好的习惯，可以用explain来查看。
+- 索引键限制
+从2.6版本开始，如果现有的索引字段的值超过索引键的限制，MongoDB中不会创建索引。
+- 插入文档超过索引键限制
+如果文档的索引字段值超过了索引键的限制，MongoDB不会将任何文档转换成索引的集合。与mongorestore和mongoimport工具类似。
+- 最大范围
+集合中索引不能超过64个
+索引名的长度不能超过128个字符
+一个复合索引最多可以有31个字段
+
+#### MongoDB 聚合
+```js
+db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)
+```
+
+|表达式 |	描述 |	实例 |
+|--|--|--|
+|$sum |	计算总和。|	db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$sum : "$likes"}}}]) |
+|$avg |	计算平均值 |	db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$avg : "$likes"}}}]) |
+|$min |	获取集合中所有文档对应值得最小值。|	db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$min : "$likes"}}}]) |
+|$max |	获取集合中所有文档对应值得最大值。 |	db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$max : "$likes"}}}]) |
+|$push |	在结果文档中插入值到一个数组中。 |	db.mycol.aggregate([{$group : {_id : "$by_user", url : {$push: "$url"}}}]) |
+|$addToSet |	在结果文档中插入值到一个数组中，但不创建副本。 |	db.mycol.aggregate([{$group : {_id : "$by_user", url : {$addToSet : "$url"}}}]) |
+|$first |	根据资源文档的排序获取第一个文档数据。|	db.mycol.aggregate([{$group : {_id : "$by_user", first_url : {$first : "$url"}}}]) |
+|$last |	根据资源文档的排序获取最后一个文档数据 |	db.mycol.aggregate([{$group : {_id : "$by_user", last_url : {$last : "$url"}}}]) |
+
+**管道的概念**
+管道在Unix和Linux中一般用于将当前命令的输出结果作为下一个命令的参数。  
+MongoDB的聚合管道将MongoDB文档在一个管道处理完毕后将结果传递给下一个管道处理。管道操作是可以重复的。  
+表达式：处理输入文档并输出。表达式是无状态的，只能用于计算当前聚合管道的文档，不能处理其它的文档。  
+这里我们介绍一下聚合框架中常用的几个操作：  
+- $project：修改输入文档的结构。可以用来重命名、增加或删除域，也可以用于创建计算结果以及嵌套文档。
+- $match：用于过滤数据，只输出符合条件的文档。$match使用MongoDB的标准查询操作。
+- $limit：用来限制MongoDB聚合管道返回的文档数。
+- $skip：在聚合管道中跳过指定数量的文档，并返回余下的文档。
+- $unwind：将文档中的某一个数组类型字段拆分成多条，每条包含数组中的一个值。
+- $group：将集合中的文档分组，可用于统计结果。
+- $sort：将输入文档排序后输出。
+- $geoNear：输出接近某一地理位置的有序文档。
+
+**$project实例**
+```js
+// 这样的话结果中就只还有_id,tilte和author三个字段了，默认情况下_id字段是被包含的，如果要想不包含_id话可以这样:
+// 非0显示；0不显示
+db.col.aggregate(
+    { $project : {
+        title : 1 ,
+        author : 1 ,
+    }}
+ );
+```
+
+**$match实例**
+```js
+// 用于获取分数大于70小于或等于90记录，然后将符合条件的记录送到下一阶段$group管道操作符进行处理。
+db.col.aggregate( [
+                        { $match : { score : { $gt : 70, $lte : 90 } } },
+                        { $group: { _id: null, count: { $sum: 1 } } }
+                       ] );
+```
+
+**$skip实例**
+```js
+// 经过$skip管道操作符处理后，前五个文档被"过滤"掉。
+db.col.aggregate(
+    { $skip : 5 });
+```
+
+**$group**
+```js
+// select by_user as _id, count(*) as num_tutorial from mycol group by by_user
+db.col.aggregate([{$group : {_id : "$by_user", num_tutorial : {$sum : 1}}}])
+```
+
+#### MongoDB 原子操作
+mongodb不支持事务，所以，在你的项目中应用时，要注意这点。无论什么设计，都不要要求mongodb保证数据的完整性。
+但是mongodb提供了许多原子操作，比如文档的保存，修改，删除等，都是原子操作。
+所谓原子操作就是要么这个文档保存到Mongodb，要么没有保存到Mongodb，不会出现查询到的文档没有保存完整的情况。
+```js
+db.books.findAndModify ( {
+   query: {
+            _id: 123456789,
+            available: { $gt: 0 }
+          },
+   update: {
+             $inc: { available: -1 },
+             $push: { checkout: { by: "abc", date: new Date() } }
+           }
+} )
+```
+
+**原子操作常用命令**  
+$set
+```js
+//用来指定一个键并更新键值，若键不存在并创建。
+{ $set : { "field" : "value" } }
+```
+$unset
+```js
+//用来删除一个键。
+{ $unset : { field : 1} }
+```
+
+$inc
+```js
+//$inc可以对文档的某个值为数字型（只能为满足要求的数字）的键进行增减的操作。
+{ $inc : { field : value } }
+```
+
+$push
+```js
+//用法：
+{ $push : { field : value } }
+//把value追加到field里面去，field一定要是数组类型才行，如果field不存在，会新增一个数组类型加进去。
+```
+
+$pushAll
+```js
+//同$push,只是一次可以追加多个值到一个数组字段内。
+{ $pushAll : { field : value_array } }
+```
+
+$pull
+```js
+//从数组field内删除一个等于value值。
+{ $pull : { field : _value } }
+```
+
+$addToSet
+```js
+//增加一个值到数组内，而且只有当这个值不在数组内才增加。
+```
+
+$pop
+```js
+//删除数组的第一个或最后一个元素
+{ $pop : { field : 1 } }
+```
+
+$rename
+```js
+//修改字段名称
+{ $rename : { old_field_name : new_field_name } }
+```
+
+$bit
+```js
+//位操作，integer类型
+{$bit : { field : {and : 5}}}
+```
+
+#### MongoDB Map Reduce
+
+#### MongoDB 全文检索
+
+#### MongoDB GridFS
+GridFS 用于存储和恢复那些超过16M（BSON文件限制）的文件(如：图片、音频、视频等)。  
+GridFS 也是文件存储的一种方式，但是它是存储在MonoDB的集合中。  
+GridFS 可以更好的存储大于16M的文件。  
+GridFS 会将大文件对象分割成多个小的chunk(文件片段),一般为256k/个,每个chunk将作为MongoDB的一个文档(document)被存储在chunks集合中。  
+GridFS 用两个集合来存储一个文件：fs.files与fs.chunks。  
+每个文件的实际内容被存在chunks(二进制数据)中,和文件有关的meta数据(filename,content_type,还有用户自定义的属性)将会被存在files集合中。  
+
+**GridFS 添加文件**
+现在我们使用 GridFS 的 put 命令来存储 mp3 文件。 调用 MongoDB 安装目录下bin的 mongofiles.exe工具。
+打开命令提示符，进入到MongoDB的安装目录的bin目录中，找到mongofiles.exe，并输入下面的代码：
+`>mongofiles.exe -d gridfs put song.mp3`
+GridFS 是存储文件的数据名称。如果不存在该数据库，MongoDB会自动创建。Song.mp3 是音频文件名。
+使用以下命令来查看数据库中文件的文档：
+`>db.fs.files.find()`
+以上命令执行后返回以下文档数据：
+```js
+{
+   _id: ObjectId('534a811bf8b4aa4d33fdf94d'),
+   filename: "song.mp3",
+   chunkSize: 261120,
+   uploadDate: new Date(1397391643474), md5: "e4f53379c909f7bed2e9d631e15c1c41",
+   length: 10401959
+}
+```
+我们可以看到 fs.chunks 集合中所有的区块，以下我们得到了文件的 \_id 值，我们可以根据这个 \_id 获取区块(chunk)的数据：
+`>db.fs.chunks.find({files_id:ObjectId('534a811bf8b4aa4d33fdf94d')})`
+以上实例中，查询返回了 40 个文档的数据，意味着mp3文件被存储在40个区块中。
+
+### 优化建议
+---
+- 在查询条件、排序条件、统计条件的字段上选择创建索引，可以显著提高查询效率。
+- 用$or时把匹配最多结果的条件放在最前面，用$and时把匹配最 少 结果的条件放在最前面。
+- 使用limit()限定返回结果集的大小，减少数据库服务器的资源消耗，以及网络传输的数据量。
+- 尽量不用模糊匹配查询，用其它精确匹配查询代替，比如$in、$nin。
+- MongoDB的智能查询优化，判断粒度为query条件，而skip和limit都不在其判断之中，当分页查询最后几页时，先用order反向排序。
+- 只查询要使用的字段，而不查询所有字段。
+- 更新字段的值时，使用$inc比update效率高。
+- capped collections比普通collections的读写效率高。
+- 必要时使用hint()强制使用某个索引查询。
+- 使用explain，根据exlpain plan进行优化。
+- 范围查询的时候尽量用$in、$nin代替。
+- 查看数据库查询日志，具体分析的效率低的操作。
+- mongodb有一个数据库优化工具database profiler，能够检测数据库操作的性能。可以发现query或者write操作中执行效率低的，从而针对这些操作进行优化。
+
+### 常用脚本
+---
+- 去重复的脚本
+```js
+db.b_doctor.aggregate([
+	{ $group: {"_id": { "doctorNum" : "$doctorNum", "name": "$name"},"countAll":{$sum:1},"dups":{$addToSet: '$_id'} }},
+	{ $match:{ "countAll":{$gt:1}}}]).forEach(function(doc){
+    doc.dups.shift();
+    db.b_doctor.remove({_id: {$in: doc.dups}});
+})
+```
+- 同步表中的数据
+```js
+db.t_qa_question_hot.find({"questionType":{$exists:false}}).forEach(function(x){
+    var cursor = db.t_qa_question.find({"_id": ObjectId(x.questionId)});
+    if(cursor.hasNext()){
+        var q = cursor.next();
+        db.t_qa_question_hot.update({"_id": x._id}, {
+            $set:{"questionType" : NumberInt(q.type),"questionCreator":q.userId}},false,true)
+    }
+});
+```
 
 ### 参考
+---
 - [官网](https://www.mongodb.com/)
 - [runoob.com >> MongoDB 教程](http://www.runoob.com/mongodb/mongodb-tutorial.html)
 -
