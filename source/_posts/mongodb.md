@@ -809,6 +809,18 @@ db.t_qa_question_hot.find({"questionType":{$exists:false}}).forEach(function(x){
     }
 });
 ```
+- 按照数组中的元素来进行分组统计
+```js
+// 如果$class_artist是数组 使用$unwind,它的功能就是把数组拆分出来，形成多条数据。
+db.articles.aggregate([  
+  {$match: { class_date: { $gte: date } } },  
+  {$project: { _id: 0, class_artist: 1 } },  
+  {$unwind: "$class_artist" },  
+  {$group: { _id: "$class_artist", tags: { $sum: 1 } }},  
+  {$project: { _id: 0,class_artist: "$_id", tags: 1 } },  
+  {$sort: { tags: -1 } }  
+])
+```
 
 ### 参考
 ---

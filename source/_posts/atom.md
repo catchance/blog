@@ -133,3 +133,4 @@ $ apm list
 - vim-mode / vim-mode-plus vim模式
 - ex-mode & relative-numbers 对于vim模式的扩展支持配合:w:s和支持相对行号
 - minimap
+- split-diff 文件对比工具

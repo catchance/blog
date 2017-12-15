@@ -42,6 +42,7 @@ date: 2016-12-26 10:40:10
 > -ea
 > -server
 > -Dsun.awt.keepWorkingSetOnMinimize=true
+> -Dfile.encoding=UTF-8
 
 ### 效率快捷键的使用
 ---
@@ -145,6 +146,13 @@ date: 2016-12-26 10:40:10
 > 需要禁用的快捷键`Win+1F`
 - Setting->Inspections->Serialization issues->Serializable class without ’serialVersionUID’ Intellij IDEA 自动生成 serialVersionUID
 - Editor -> Live Templates output -> 新建soutl Prints a line separator Template text:System.out.println("---------------------------------------------------------");快捷输入。
+- 集成JIRA、UML类图插件、集成SSH、集成FTP、Database管理  
+[参考链接](http://blog.csdn.net/RickyIT/article/details/52956108?locationNum=9&fps=1)
+- Smart Step Into  
+在 Debug 的时候，如果一行代码中有多行语句，我们又需要进入其中的一个方法调用的话，经常做的方法是点开源代码，然后打上断点，或者直接右键 Run to Line，而不能使用快捷键快速将 Debug 的当前行进入到想要去的方法上，Intellij IDEA 提供了 Smart Step Into 的能力，只要使用 Shift + F7，就可以选择到底要 Debug 进入哪一个方法
+
+#### idea 高级调试技巧
+[idea 高级调试技巧](http://www.cnblogs.com/yjmyzz/p/idea-advanced-debug-tips.html)
 
 #### 快速输入
 sout
@@ -155,18 +163,32 @@ soutl
 serr
 soutf
 
+### 常见问题
+- 解决idea 控制台中文乱码
+[参考链接](https://jingyan.baidu.com/article/046a7b3ea33e25f9c27fa93d.html)
+
 ### 插件
 ---
 [插件仓库][0]
-[Key Promoter][1]
+[Key Promoter X][1]
 [.ignore][2]
 [Jindent][3]
 [CheckStyle]
 [FindBugs]
 [javadoc]
 [Maven Helper]
-[GsonFormat]
+[GsonFormat]json格式的内容转成Object的需求
 [IdeaVim]
+[Maven Helper]
+[JRebel]
+[AceJump] AceJump其实是一款能够代替鼠标的软件
+[VisualVM Launcher]
+[lombok]
+[IdeaJad]
+[Equals and HashCode Deluxe Generator]
+[save actions]
+[Mongo Plugin] mongo的Idea集成插件
+[Iedis] redis的集成插件
 
 [0]:http://plugins.jetbrains.com/
 [1]:http://plugins.jetbrains.com/plugin?pr=idea&pluginId=1003

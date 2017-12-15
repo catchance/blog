@@ -60,6 +60,28 @@ date: 2016-12-28 18:28:06
 ---
 chrome://about
 
+### chrome插件
+---
+- JSONView
+- 印象笔记·剪藏 （笔记）
+- 马克飞象 （MD）
+- Remarkerbe （标记）
+- Clear your downloads list automatically（自动清除下载历史记录）
+- Awesome Screenshot / Smartshot （截图）
+- Adguard / Adblock Plus （广告拦截）
+- 谷歌翻译 / Imtranslator
+- Atavi / iCloud / Xmarks Bookmark Sync（跨浏览器同步备份书签）
+- Infinity新标签页(Pro)
+- Vimium
+- Octotree 程序员神器浏览github方便浏览目录
+- Push to Kindle
+- wappalyzer 分析网站使用了哪些技术
+- XV — XML Viewer / XML Tree XML文件浏览的插件
+- Tampermonkey 互联网神器——Greasemonkey（油猴脚本）/ Tampermonkey，它能让你除去这些烦恼，甚至，按照你想要的方式来定制网站，享受属于你自己的互联网
+- Sourcegraph for GitHub 方便浏览github上面代码的插件
+- ZenHub for GitHub
+- 流浪节省程序
+
 ### chrome 控制台
 ---
 `F12`进入chrome开发者工具
