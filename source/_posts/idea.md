@@ -190,6 +190,7 @@ soutf
 [Mongo Plugin] mongo的Idea集成插件
 [Iedis] redis的集成插件  
 [CodeGlance] 类似SublimeText的Mini Map插件
+[sonarlint] 代码检查工具  
 
 [0]:http://plugins.jetbrains.com/
 [1]:http://plugins.jetbrains.com/plugin?pr=idea&pluginId=1003
