@@ -134,3 +134,10 @@ $ apm list
 - ex-mode & relative-numbers 对于vim模式的扩展支持配合:w:s和支持相对行号
 - minimap
 - split-diff 文件对比工具
+- atom-beautify atom-beautify是一个格式化代码的插件  
+- atom-formatter-jsbeautify  
+- autocomplete-*   
+- autocomplete-paths：填写路径的时候有Sug提示  
+- autocomplete-php：php代码提示补全  
+- autocomplete-java：java代码提示补全  
+- file-icons 让文件前面有彩色图片，使文件类型看得更加清除舒服  
