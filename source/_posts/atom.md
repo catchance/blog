@@ -136,8 +136,15 @@ $ apm list
 - split-diff 文件对比工具
 - atom-beautify atom-beautify是一个格式化代码的插件  
 - atom-formatter-jsbeautify  
-- autocomplete-*   
+- autocomplete、autocomplete-modules
+- autocomplete-json、autocomplete-xml    
 - autocomplete-paths：填写路径的时候有Sug提示  
 - autocomplete-php：php代码提示补全  
 - autocomplete-java：java代码提示补全  
 - file-icons 让文件前面有彩色图片，使文件类型看得更加清除舒服  
+- pigments 项目显示颜色的插件  
+- pdf-view 直接查看PDF文件的插件  
+- sync-settings 将配置和插件同步到指定的Gist  
+
+主题
+- seti-ui、seti-syntax
