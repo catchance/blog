@@ -190,7 +190,13 @@ soutf
 [Mongo Plugin] mongo的Idea集成插件
 [Iedis] redis的集成插件  
 [CodeGlance] 类似SublimeText的Mini Map插件
-[sonarlint] 代码检查工具  
+[sonarlint] 代码检查工具
+[Grep Console] 高亮log不同级别日志，看日志的时候一目了然。  
+[GenerateSerialVersionUID] Alt + Insert 生成serialVersionUID  
+[RestfulToolkit] Java WEB开发必备，再也不用全局搜索RequestMapping了。  
+[Rainbow Brackets] 彩虹括号。自动给代码块内花括号和括号加色，让视野更加注意在代码上。  
+[Alibaba Java Coding Guidelines] 阿里巴巴Java开发规约扫描插件。  
+[String Manipulation] 字符串格式风格快捷转换：大小写、驼峰、连接串等。  
 
 [0]:http://plugins.jetbrains.com/
 [1]:http://plugins.jetbrains.com/plugin?pr=idea&pluginId=1003
