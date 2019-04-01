@@ -197,6 +197,8 @@ soutf
 [Rainbow Brackets] 彩虹括号。自动给代码块内花括号和括号加色，让视野更加注意在代码上。  
 [Alibaba Java Coding Guidelines] 阿里巴巴Java开发规约扫描插件。  
 [String Manipulation] 字符串格式风格快捷转换：大小写、驼峰、连接串等。  
+[MyBatis Log Plugin] MyBatis Log Plugin 这款插件是直接将Mybatis执行的sql脚本显示出来，无需处理，可以直接复制出来执行的  
+[Free MyBtais plugin] Free MyBtais plugin  
 
 [0]:http://plugins.jetbrains.com/
 [1]:http://plugins.jetbrains.com/plugin?pr=idea&pluginId=1003
