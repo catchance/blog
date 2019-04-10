@@ -1,11 +1,8 @@
 ---
 title: chrome
 toc: true
-tags:
-  - chrome
-  - 工具
-categories:
-  - chrmoe
+tags: ["chrome", "工具"]
+categories: ["chrmoe"]
 date: 2016-12-28 18:28:06 +08:00
 ---
 > chrome浏览器的使用

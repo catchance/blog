@@ -1,10 +1,8 @@
 ---
 title: Linux
 toc: true
-tags:
-  - linux
-categories:
-  - linux
+tags: ["linux"]
+categories: ["linux"]
 date: 2017-02-22 11:36:31 +08:00
 ---
 > 这里写摘要内容  

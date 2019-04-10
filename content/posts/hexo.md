@@ -1,9 +1,8 @@
 ---
 title: Hexo基础知识
 toc: true
-tags:
-  - install
-categories: [ hexo]
+tags: ["install"]
+categories: ["hexo"]
 ---
 > hexo是一款基于Node.js的静态博客框架。
 > 本文主要内容包括：hexo的基本语法和使用技巧。

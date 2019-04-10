@@ -1,11 +1,8 @@
 ---
 title: vim
 toc: true
-tags:
-  - vim
-  - start
-categories:
-  - vim
+tags: ["vim", "start"]
+categories: ["vim"]
 date: 2016-12-16 11:34:08 +08:00
 ---
 > vim的相关内容和基本操作  

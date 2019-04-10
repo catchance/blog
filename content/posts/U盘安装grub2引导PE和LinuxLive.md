@@ -1,11 +1,8 @@
 ---
 title: U盘安装grub2引导PE和LinuxLive
 toc: true
-tags:
-  - 装机
-  - grub
-categories:
-  - 工具
+tags: ["grub", "装机"]
+categories: ["工具"]
 date: 2017-06-28 18:22:17 +08:00
 ---
 > U盘安装grub2引导PE和LinuxLive

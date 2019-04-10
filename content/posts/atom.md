@@ -1,11 +1,8 @@
 ---
 title: atom
 toc: true
-tags:
-  - 基础
-  - 工具
-categories:
-  - atom
+tags: ["基础", "工具"]
+categories: ["atom"]
 date: 2016-12-21 17:16:59 +08:00
 ---
 > atom的使用技巧和常用插件  

@@ -1,11 +1,8 @@
 ---
 title: atom-vim-mode-plus
 toc: true
-tags:
-  - 插件
-  - 工具
-categories:
-  - atom
+tags: ["插件", "工具"]
+categories: ["atom"]
 date: 2016-12-27 11:11:37 +08:00
 ---
 > atom的插件vim-mode-plus的使用  

@@ -1,9 +1,8 @@
 ---
 title: ssh-keygen
 toc: true
-tags:
-  - linux命令
-categories: [ ssh]
+tags: ["linux命令"]
+categories: ["ssh"]
 ---
 > ssh-keygen生产RSA私钥
 

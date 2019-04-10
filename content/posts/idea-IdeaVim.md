@@ -1,11 +1,8 @@
 ---
 title: idea-IdeaVim
 toc: true
-tags:
-  - idea
-  - 插件
-categories:
-  - idea
+tags: ["idea", "插件"]
+categories: ["idea"]
 date: 2017-01-04 14:14:44 +08:00
 ---
 > Idea的vim插件的使用   

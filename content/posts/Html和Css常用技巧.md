@@ -1,11 +1,8 @@
 ---
 title: Html和Css常用技巧
 toc: true
-tags:
-  - HTML&CSS
-  - 技巧
-categories:
-  - HTML&CSS
+tags: ["HTML&CSS",  "技巧"]
+categories: ["HTML&CSS"]
 date: 2016-12-08 17:36:37 +08:00
 ---
 > 常用的Html和Css的使用技巧  

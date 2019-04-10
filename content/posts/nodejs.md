@@ -1,9 +1,8 @@
 ---
 title: Nodejs基础知识
 toc: true
-tags:
-  - install
-categories: [ nodejs]
+tags: ["install"]
+categories: ["nodejs"]
 ---
 
 [Node.js](https://nodejs.org/)

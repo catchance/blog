@@ -1,11 +1,9 @@
 ---
 title: VPN和Socks5代理翻墙
 toc: true
-tags:
-  - VPN
-  - 翻墙
+tags: ["VPN", "翻墙"]
+categories: ["翻墙"]
 date: 2017-6-3 10:14:48 +08:00
-categories: [ 翻墙]
 ---
 > Vpn的搭建
 > 翻墙技术的实现

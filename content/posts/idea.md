@@ -1,12 +1,8 @@
 ---
 title: idea
 toc: true
-tags:
-  - install
-  - ieda
-  - 工具
-categories:
-  -idea
+tags: ["install", "idea", "工具"]
+categories: ["idea"]
 date: 2016-12-26 10:40:10 +08:00
 ---
 > idea的简介和详细使用

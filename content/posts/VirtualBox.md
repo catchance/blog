@@ -1,11 +1,8 @@
 ---
 title: VirtualBox
 toc: true
-tags:
-  - 工具
-  - VirtualBox
-categories:
-  - VirtualBox
+tags: ["工具", "VirtualBox"]
+categories: ["VirtualBox"]
 date: 2017-02-15 17:18:28 +08:00
 ---
 > VirtualBox的简单使用

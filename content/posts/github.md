@@ -1,9 +1,8 @@
 ---
 title: Github
 toc: true
-tags:
-  - github
-categories: [ git]
+tags: ["github"]
+categories: ["git"]
 ---
 
 [git](https://git-scm.com/)

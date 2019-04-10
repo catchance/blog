@@ -1,11 +1,8 @@
 ---
 title: wkhtmltoimage-bug
 toc: true
-tags:
-  - bug
-  - wkhtmltoimage
-categories:
-  - wkhtmltoimage
+tags: ["wkhtmltoimage", "bug"]
+categories: ["wkhtmltoimage"]
 date: 2016-12-13 23:10:04 +08:00
 ---
 > wkhtmltoimage是将HTML转变成image的帮助软件。

@@ -1,10 +1,8 @@
 ---
 title: mongodb
 toc: true
-tags:
-  - mongodb
-categories:
-  - mongodb
+tags: ["mongodb"]
+categories: ["mongodb"]
 date: 2017-07-03 10:13:45 +08:00
 ---
 > mongodb基础知识、概念、与关系数据库的对比  

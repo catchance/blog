@@ -1,11 +1,8 @@
 ---
 title: docker
 toc: true
-tags:
-  - docker
-  - base
-categories:
-  - docker
+tags: ["docker", "base"]
+categories: ["docker"]
 date: 2017-02-14 11:20:22 +08:00
 ---
 > docker的基础介绍和简单实用  
