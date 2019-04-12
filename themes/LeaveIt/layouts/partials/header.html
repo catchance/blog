@@ -3,6 +3,13 @@
         <div class="navbar-header header-logo">
         	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
         </div>
+        <!-- search box -->
+        <div id="searchBox">
+            <input type="text" id="searchBoxInput" placeholder="Search..." />
+            <img id="searchBoxIcon" src="{{ .Site.BaseURL }}/img/search.png" />
+        </div>
+        <!-- search results -->
+        <div id="searchResults"></div>
         <div class="menu navbar-right">
                 {{ $currentPage := . }}
                 {{ range .Site.Menus.main }}
