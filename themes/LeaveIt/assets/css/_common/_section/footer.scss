@@ -7,11 +7,12 @@
   #dynamic-to-top {
     display: none;
     overflow: hidden;
-    width: auto;
+    width: 25px;
+    height: 25px;
     z-index: 90;
     position: fixed;
     bottom: 2em;
-    right: 2em;
+    right: 30px;
     top: auto;
     left: auto;
     font-family: sans-serif;
@@ -19,9 +20,10 @@
     color: #fff;
     text-decoration: none;
     text-shadow: 0 1px 0 #333;
+    text-align: center;
     font-weight: bold;
-    padding: 17px 16px;
-    border: 1px solid $light-border-color;
+    // padding: 0px 6px;
+    border: 0px solid $light-border-color;
     background: #222;
     &:hover {
       background: #000;
