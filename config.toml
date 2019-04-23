@@ -1,4 +1,4 @@
-baseURL = "https://example.com"
+baseURL = "https://xchance.xyz"
 languageCode = "en-us"
 title = "catchance"
 theme = "LeaveIt"
@@ -42,7 +42,7 @@ preserveTaxonomyNames = true
 [params]
     since = 2011
     author = "catchance"                           # Author's name
-    avatar = "/images/me/avatar.jpeg"           # Author's avatar
+    avatar = "/img/avatar.png"           # Author's avatar
     subtitle = "Talk is cheap, Show me the code... "         # Subtitle
     cdn_url = ""           # Base CDN URL
     home_mode = "" # post or other
@@ -57,16 +57,21 @@ preserveTaxonomyNames = true
 
     license= ''
 
+[params.logo]
+    logoText     = "$ cd /home/"
+    logoHomeLink = "/"
+
 [params.social]
-    GitHub = "xxoo"
-    Twitter = "xxoo"
-    Email   = "xxoo"
-    Instagram = "xxoo"
-    Wechat = "/images/me/wechat.png"  # Wechat QRcode image
-    Facebook = "xxoo"
-    Telegram = "xxoo"
-    Dribbble = "xxoo"
-    Medium = "xxoo"
+    GitHub = "catchance"
+#    Twitter = "xxoo"
+    Instagram = "catchancex"
+    Weibo = "xxchance"
+    Wechat = "/img/wechat.jpg"  # Wechat QRcode image
+    Email   = "catchance@163.com"
+#    Facebook = "xxoo"
+#    Telegram = "xxoo"
+#    Dribbble = "xxoo"
+#    Medium = "xxoo"
 
 [outputs]
     home = ["JSON", "HTML"]

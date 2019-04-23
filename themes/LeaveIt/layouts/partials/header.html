@@ -1,7 +1,19 @@
 <nav class="navbar">
     <div class="container">
         <div class="navbar-header header-logo">
-        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+<!--        <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;
+            <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>-->
+            <a href="{{ if .Site.Params.Logo.LogoHomeLink }}{{ .Site.Params.Logo.LogoHomeLink }}{{else}}{{ .Site.BaseURL }}{{ end }}" style="text-decoration: none;">
+                <div class="logo">
+                    {{ if .Site.Params.Logo.path }}
+                    <img src="{{ .Site.Params.Logo.path }}" alt="{{ .Site.Params.Logo.alt }}" />
+                    {{ else }}
+                    <span class="logo__mark">></span>
+                    <span class="logo__text">{{ with .Site.Params.Logo.logoText }}{{ . }}{{ else }}$ cd /home/{{ end }}</span>
+                    <span class="logo__cursor"></span>
+                    {{ end }}
+                </div>
+            </a>
         </div>
         <!-- search box -->
         <div id="searchBox">
@@ -16,12 +28,32 @@
                 <a class="menu-item{{if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active{{end}}" href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
                 {{ end }}
         </div>
+        &nbsp;|&nbsp;
+        <div style="padding: 2px">
+            <a href="javascript:void(0);" class="theme-switch"><i class="far fa-moon"></i></a>&nbsp;
+        </div>
+
     </div>
 </nav>
 <nav class="navbar-mobile" id="nav-mobile" style="display: none">
      <div class="container">
         <div class="navbar-header">
+<!--
             <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="{{.Site.BaseURL}}">{{ .Site.Title }}</a></div>
+            -->
+            <div class="navbar-header header-logo">
+                <a href="{{ if .Site.Params.Logo.LogoHomeLink }}{{ .Site.Params.Logo.LogoHomeLink }}{{else}}{{ .Site.BaseURL }}{{ end }}" style="text-decoration: none;">
+                    <div class="logo">
+                        {{ if .Site.Params.Logo.path }}
+                        <img src="{{ .Site.Params.Logo.path }}" alt="{{ .Site.Params.Logo.alt }}" />
+                        {{ else }}
+                        <span class="logo__mark">></span>
+                        <span class="logo__text">{{ with .Site.Params.Logo.logoText }}{{ . }}{{ else }}$ cd /home/{{ end }}</span>
+                        <span class="logo__cursor"></span>
+                        {{ end }}
+                    </div>
+                </a>
+            </div>
             <div class="menu-toggle">
                 <span></span><span></span><span></span>
             </div>

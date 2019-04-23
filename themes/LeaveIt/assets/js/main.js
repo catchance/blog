@@ -34,9 +34,14 @@ jQuery(function($) {
         const isDark = currentTheme === 'dark'
         $('body').toggleClass('dark-theme', isDark)
         $('.theme-switch').on('click', () => {
-            $('body').toggleClass('dark-theme')
-            window.localStorage &&
-                window.localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light', )
+            $('body').toggleClass('dark-theme');
+            var theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+            window.localStorage && window.localStorage.setItem('theme', theme);
+            if(theme === 'dark'){
+                $('.theme-switch i').removeClass("far fa-moon").addClass("fas fa-sun");
+            }else{
+                $('.theme-switch i').removeClass("fas fa-sun").addClass("far fa-moon");
+            }
         })
     }
 

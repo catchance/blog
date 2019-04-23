@@ -2,7 +2,7 @@
     position: relative;
     max-width: 300px;
     height: 30px;
-    margin: 20px auto;
+    margin: 16px auto;
 }
 
 #searchBox #searchBoxInput {
@@ -264,6 +264,14 @@
 }
 .use-motion .logo-line-after i {
     right: -100%;
+}
+
+/************************/
+.fa .fa-moon-o {
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 
