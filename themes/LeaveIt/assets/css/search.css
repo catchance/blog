@@ -8,6 +8,7 @@
 #searchBox #searchBoxInput {
     position: absolute;
     /*width: 100%;*/
+    width: 230px;
     padding: 0 35px 0 15px;
     top: 0;
     /*left: 0;*/
@@ -274,4 +275,22 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+/*********** ^解决回到顶部的箭头和目录因为刷新页面抖动的问题^ ****************/
+html {
+    overflow-y: scroll;
+}
 
+:root {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+:root body {
+    position: absolute;
+}
+
+body {
+    width: 100vw;
+    overflow: hidden;
+}
+/************ && ***************/

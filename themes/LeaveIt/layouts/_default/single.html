@@ -54,13 +54,14 @@
                 <span>{{ . }} </span>
                 </p>
             {{ end }}
-           
-            {{ with .Permalink }} 
-            <p class="copyright-item">
+
+            {{ if and .Permalink .Title }}
+                <p class="copyright-item">
                     <span>Link:</span>
-                    <a href={{ . }}>{{ . }}</span>
-            </p>
+                    <a href={{ .Permalink }}><span>{{ .LinkTitle }}</span></a>
+                </p>
             {{ end }}
+
             {{ with .Site.Params.license }} 
             <p class="copyright-item lincese">
                 {{ . | safeHTML}}
