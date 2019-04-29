@@ -7,22 +7,6 @@
 {{ $main := resources.Get "/js/main.js" }}
 <script src="{{ $main.Permalink }}"></script>
 
-{{ if .IsPage }}
-    {{ $prettify := resources.Get "/js/prettify.min.js" }}
-    <script src="{{ $prettify.Permalink }}"></script>
-    {{ $dynamic := resources.Get "/js/dynamic.to.top.min.js" }}
-    <script src="{{ $dynamic.Permalink }}"></script>
-        {{ if $postHasImages }}
-        <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">
-        {{ $lazysizes := resources.Get "/js/lazysizes.min.js"}}
-        <script src="{{ $lazysizes.Permalink }}"></script>
-        {{ $lihtGallery := resources.Get "/js/lightGallery-all.min.js" }}
-        <script src="{{ $lihtGallery.Permalink }}"></script>
-        {{ $lihtGallery_init := resources.Get "/js/lightGallery-init.js" }}
-        <script src="{{ $lihtGallery_init.Permalink }}"></script>
-        {{ end }}
-{{ end }}
-
 {{ $mark := resources.Get "js/jquery.mark.es6.min.js" }}
 <script src="{{ $mark.Permalink }}"></script>
 
@@ -46,3 +30,36 @@
 
 {{ $service_worker := resources.Get "service-worker.js" }}
 <script src="{{ $service_worker.Permalink }}"></script>
+
+{{ if .IsPage }}
+    {{ $prettify := resources.Get "/js/prettify.min.js" }}
+    <script src="{{ $prettify.Permalink }}"></script>
+    {{ $dynamic := resources.Get "/js/dynamic.to.top.min.js" }}
+    <script src="{{ $dynamic.Permalink }}"></script>
+        {{ if $postHasImages }}
+        <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">
+        {{ $lazysizes := resources.Get "/js/lazysizes.min.js"}}
+        <script src="{{ $lazysizes.Permalink }}"></script>
+        {{ $lihtGallery := resources.Get "/js/lightGallery-all.min.js" }}
+        <script src="{{ $lihtGallery.Permalink }}"></script>
+        {{ $lihtGallery_init := resources.Get "/js/lightGallery-init.js" }}
+        <script src="{{ $lihtGallery_init.Permalink }}"></script>
+        {{ end }}
+{{ end }}
+
+
+{{ $canvas_nest := resources.Get "/js/canvas_nest.js" }}
+<script>
+    var count = parseInt(document.body.scrollHeight / 10);
+    if(count > 1000) {
+        count = 1000
+    }
+
+    if( count < 150) {
+        count = 150
+    }
+
+    console.log(count)
+    document.write('<script type="text/javascript" color="#F5F5F5" opacity="0.20" zIndex="-2" count="'+ count +'" src="{{ $canvas_nest.Permalink }}"><\/script>');
+</script>
+

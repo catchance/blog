@@ -3,6 +3,8 @@ title: mongodb
 toc: true
 tags: ["mongodb"]
 categories: ["mongodb"]
+keywords: ["mongodb", "vim"]
+description: "这是一篇关于mongod的文章"
 date: 2017-07-03 10:13:45 +08:00
 ---
 > mongodb基础知识、概念、与关系数据库的对比  
