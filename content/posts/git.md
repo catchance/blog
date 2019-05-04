@@ -3,6 +3,7 @@ title: Git基础知识
 toc: true
 tags: ["install"]
 categories: ["git"]
+draft: true
 ---
 > 本文包括git的简介、基本使用方法、部分原理。
 > 这么好用的工具必须安利大家使用，真的是越使用越觉得其强大的功能。

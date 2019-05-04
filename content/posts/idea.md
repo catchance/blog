@@ -4,6 +4,7 @@ toc: true
 tags: ["install", "idea", "工具"]
 categories: ["idea"]
 date: 2016-12-26 10:40:10 +08:00
+draft: true
 ---
 > idea的简介和详细使用
 

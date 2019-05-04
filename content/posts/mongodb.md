@@ -6,6 +6,7 @@ categories: ["mongodb"]
 keywords: ["mongodb", "vim"]
 description: "这是一篇关于mongod的文章"
 date: 2017-07-03 10:13:45 +08:00
+draft: true
 ---
 > mongodb基础知识、概念、与关系数据库的对比  
 > mongodb shell命令操作语法，控制台底层的查询语句都是用javascript脚本完成操作

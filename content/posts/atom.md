@@ -4,6 +4,7 @@ toc: true
 tags: ["基础", "工具"]
 categories: ["atom"]
 date: 2016-12-21 17:16:59 +08:00
+draft: true
 ---
 > atom的使用技巧和常用插件  
 
@@ -145,3 +146,5 @@ $ apm list
 
 主题
 - seti-ui、seti-syntax
+
+{{< gist catchance cf43def02fd6eaf021ab38123d53752c >}}

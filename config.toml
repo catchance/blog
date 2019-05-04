@@ -8,7 +8,11 @@ enableEmoji = true
 enableRobotsTXT = true
 googleAnalytics = ""
 
+hasCJKLanguage = true
+
 preserveTaxonomyNames = true
+
+pygmentsCodeFences = true
 
 [blackfriday]
   hrefTargetBlank = true

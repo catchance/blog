@@ -4,6 +4,7 @@ toc: true
 tags: ["wkhtmltoimage", "install"]
 categories: ["wkhtmltoimage"]
 date: 2016-12-13 23:15:35 +08:00
+draft: true
 ---
 > wkhtmltoimage简单介绍和安装  
 

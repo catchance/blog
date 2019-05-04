@@ -4,9 +4,11 @@ toc: true
 tags: ["wkhtmltoimage", "bug"]
 categories: ["wkhtmltoimage"]
 date: 2016-12-13 23:10:04 +08:00
+draft: true
 ---
-> wkhtmltoimage是将HTML转变成image的帮助软件。
-> wkhtmltoimage软件使用中长出现的一些问题。
+> [wkhtmltoimage]({{< ref "wkhtmltoimage.md" >}})是将HTML转变成image的帮助软件。  
+> wkhtmltoimage软件使用中长出现的一些问题。  
+> [Download]({{< relref "wkhtmltoimage.md#相关文档" >}})
 
 <!--more-->
 

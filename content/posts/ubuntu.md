@@ -4,6 +4,7 @@ toc: true
 tags: ["linux"]
 categories: ["操作系统"]
 date: 2017-6-3 10:14:48 +08:00
+draft: true
 ---
 > ubuntu系统的使用
 

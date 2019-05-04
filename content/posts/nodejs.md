@@ -3,6 +3,7 @@ title: Nodejs基础知识
 toc: true
 tags: ["install"]
 categories: ["nodejs"]
+draft: true
 ---
 
 [Node.js](https://nodejs.org/)

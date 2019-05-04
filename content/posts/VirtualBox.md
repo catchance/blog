@@ -4,6 +4,7 @@ toc: true
 tags: ["工具", "VirtualBox"]
 categories: ["VirtualBox"]
 date: 2017-02-15 17:18:28 +08:00
+draft: true
 ---
 > VirtualBox的简单使用
 > 这里写摘要内容
