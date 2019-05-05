@@ -58,8 +58,8 @@ pygmentsCodeFences = true
 
     beian = ""
     baiduAnalytics = ""
-
     license= ''
+#    canvasNest = true
 
 [params.logo]
     logoText     = "$ cd /home/"
