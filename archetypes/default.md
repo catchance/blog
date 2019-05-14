@@ -14,6 +14,8 @@ weight = 40
 # 这里还可以自定义任何参数，这些参数可以在模板中使用
 toc = true
 comments = false
+# 精选图片
+featured_image = ""
 +++
 
 > 这里是一个摘要信息    

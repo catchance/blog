@@ -1,4 +1,4 @@
-baseURL = "https://xchance.xyz"
+baseURL = "http://catchance.github.io"
 languageCode = "en-us"
 title = "catchance"
 theme = "LeaveIt"

@@ -14,6 +14,7 @@ weight = 40
 # 这里还可以自定义任何参数，这些参数可以在模板中使用
 toc = true
 comments = false
+featured_image = ""
 +++
 
 > [Hugo](https://gohugo.io/)是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。
@@ -39,7 +40,7 @@ extended版本功能更多，比如SCSSToCSS的功能，解压得到exe文件后
 
 
 #### 其他系统
-请参考[官方文档](https://gohugo.io/getting-started/installing/)——安装
+请参考[官方文档](https://gohugo.io/getting-started/installing/)
 
 #### 验证
 ```bash
@@ -96,8 +97,8 @@ Hugo Static Site Generator v0.55.0/extended darwin/amd64 BuildDate: unknown
 { {< ref "posts/hugo.md#高级功能" >}} => http://localhost:1313/2019/hugo/#高级功能
 ```
 #### Syntax Highlighting
-[Syntax Highlighting](https://gohugo.io/content-management/syntax-highlighting/)
-[List of Chroma Highlighting Languages](https://gohugo.io/content-management/syntax-highlighting/#list-of-chroma-highlighting-languages)
+- [Syntax Highlighting](https://gohugo.io/content-management/syntax-highlighting/)
+- [List of Chroma Highlighting Languages](https://gohugo.io/content-management/syntax-highlighting/#list-of-chroma-highlighting-languages)
 
 ### 相关文档
 ---
