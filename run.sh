@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cd /root/blog
 git fetch origin
 git checkout feature-hugo
 git reset --hard origin/feature-hugo
