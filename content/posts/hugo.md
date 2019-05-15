@@ -38,6 +38,30 @@ extended版本功能更多，比如SCSSToCSS的功能，解压得到exe文件后
 - [hugo_0.55.5_Windows-64bit](https://github.com/gohugoio/hugo/releases/download/v0.55.5/hugo_0.55.5_Windows-64bit.zip)
 - [hugo_extended_0.55.5_Windows-64bit](https://github.com/gohugoio/hugo/releases/download/v0.55.5/hugo_extended_0.55.5_Windows-64bit.zip)
 
+#### linux
+- ubuntu下面使用`Snap Package` 
+```bash
+# install the “extended” Sass/SCSS version
+> snap install hugo --channel=extended
+# install the non-extended version without Sass/SCSS support
+> snap install hugo
+```
+- apt-get(hugo的版本很旧，不建议使用这种方式安装)
+```bash
+> sudo apt-get install hugo
+```
+
+#### Source 
+- Git
+- Go (at least Go 1.11)
+```bash
+> mkdir $HOME/src
+> cd $HOME/src
+> git clone https://github.com/gohugoio/hugo.git
+> cd hugo
+# Remove --tags extended if you do not want/need Sass/SCSS support.
+> go install --tags extended
+```
 
 #### 其他系统
 请参考[官方文档](https://gohugo.io/getting-started/installing/)
