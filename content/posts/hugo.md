@@ -76,7 +76,7 @@ Hugo Static Site Generator v0.55.0/extended darwin/amd64 BuildDate: unknown
 ---
 #### 建站
 ```bash
-> hugo new site xxx
+> hugo new site blog
 # 目录结构（ps:可以使用 tree -L 2 命令生成目录结构）
 .
 ├── archetypes  # 储存.md的模板文件
@@ -95,15 +95,17 @@ Hugo Static Site Generator v0.55.0/extended darwin/amd64 BuildDate: unknown
 #### 添加一个主题
 ```bash
 # 主题在themes目录下面
-> cd xxx
+> cd blog
 > git init
-> git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke;
+> git submodule add https://github.com/catchance/smart.git themes/smart;
 # 编辑你的 config.toml 配置文件使用该主题
-> echo 'theme = "ananke"' >> config.toml
+> echo 'theme = "smart"' >> config.toml
 ```
-#### 开始写作
+
+#### 请开始你的表演吧
 `hugo new posts/helloworld.md`
-#### 启动内部服务器
+
+#### 启动内部服务器本地预览
 ```bash
 > hugo server -t LeaveIt --ignoreCache --buildDrafts
 # -t 使用主题
@@ -111,6 +113,22 @@ Hugo Static Site Generator v0.55.0/extended darwin/amd64 BuildDate: unknown
 # -D --buildDrafts 生成页面包含草稿
 ```
 使用[http://localhost:1313/](http://localhost:1313/)可以访问了
+
+#### 部署到[Github Pages](https://pages.github.com/)
+[申请流程参考](https://blog.csdn.net/njp_njp/article/details/79933295)
+
+- 请到[Github](https://github.com/)申请注册账号。
+- 首页 => New repository => repository name: <username>.github.io
+- 将public(hugo生成的静态文件目录)中的静态文件`git pull`到刚刚建立的仓库中去
+- 在Github中的仓库Setting页面找到GitHubPages那一项，将Sourse改成master branch保存
+- 使用`http://<username>.github.io/`访问
+
+### 进阶(webhook + vultr)
+---
+使用webhook、vultr自动发布和部署到云服务器
+#### vultr
+
+#### webhook
 
 ### 高级功能
 ---
