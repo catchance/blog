@@ -1,0 +1,3 @@
+[submodule "themes/smart"]
+	path = themes/smart
+	url = git@github.com:catchance/smart.git

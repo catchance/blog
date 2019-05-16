@@ -1,7 +1,7 @@
 baseURL = "http://catchance.github.io"
 languageCode = "en-us"
 title = "catchance"
-theme = "LeaveIt"
+theme = "smart"
 
 paginate = 12
 enableEmoji = true
