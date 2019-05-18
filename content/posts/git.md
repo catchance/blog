@@ -3,6 +3,8 @@ title: Git基础知识
 toc: true
 tags: ["install"]
 categories: ["git"]
+keywords: ["git"]
+description: "Git基础知识"
 draft: true
 ---
 > 本文包括git的简介、基本使用方法、部分原理。
@@ -154,9 +156,14 @@ $ git difftool --tool-help
 $ git commit -m "message"
 # 跳过暂存区直接提交
 $ git commit -a -m "message"
+# git 修改上次git commit的时间(date -R获取当前时间的命令)
+# `date -R` 也可以使用 "$(date -R)"
+# --date 的时间格式为 "Sun, 25 Dec 2018 20:00:00 +0800"
+# git commit –amend既可以对上次提交的内容进行修改，也可以修改提交说明，也可以修改提交时间。
+> git commit --amend --date=`date -R` 
 ```
-> - 提交时记录的是放在暂存区域的快照
-> - 每一次运行提交操作，都是对你项目作一次快照，以后可以回到这个状态，或者进行比较。
+- 提交时记录的是放在暂存区域的快照
+- 每一次运行提交操作，都是对你项目作一次快照，以后可以回到这个状态，或者进行比较。
 
 #### 移除文件
 ```bash
@@ -197,9 +204,9 @@ $ git log --graph
 $ git log -- <path>
 ```
 *git log 命令乱码的问题解决方法*
-> git config --global i18n.commitencoding utf-8
-> git config --global i18n.logoutputencoding gbk
-> export LESSCHARSET=utf-8
+- git config --global i18n.commitencoding utf-8
+- git config --global i18n.logoutputencoding gbk
+- export LESSCHARSET=utf-8
 
 #### 查询引用变更的记录
 ```bash
@@ -405,52 +412,144 @@ $ git fetch origin master
 $ git rebase origin/master
 $ git push
 ```
-> 不要对在你的仓库外有副本的分支执行rebase操作
+- rebase妙用：压缩多次提交
+
+```bash
+# 使用下面的命令压缩多次提交为1次，最后一个数字4代表压缩最后四次提交。
+> git rebase -i HEAD~4
+# 该命令执行后，会弹出vim的编辑窗口，4次提交的信息会倒序排列，最上面的是第四次提交，最下面的是最近一次提交。
+# 我们需要修改第2-4行的第一个单词pick -> squash
+# 这个意义为将最后三次的提交压缩到倒数第四次的提交
+# 效果就是我们在pick所在的提交就已经做了4次动作，但是看起来就是一次而已
+
+pick 1cf0e94 ▒~O~P交主▒▒~X▒▒~P模▒~]~W
+pick ec818f3 修▒~T▒hugo
+pick 6feb489 修▒~T▒git
+pick 8d61b20 update git
+# Rebase 9da3e1a..8d61b20 onto 9da3e1a (4 commands)
+#
+# Commands:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+
+# 保存退出，git会一个一个压缩提交历史，如果有冲突，需要修改，修改的时候要注意，保留最新的历史，不然我们的修改就丢弃了。修改以后要记得敲下面的命令：
+> git add .
+> git rebase --continue
+# 如果你想放弃这次压缩的话，执行以下命令
+> git rebase --abort
+# 修改好了后，会发现无法push到远程仓库，所以需要 -f 强制push
+> git push -f
+```
+- 不要对在你的仓库外有副本的分支执行rebase操作
+
+#### 子模块(`git Submodule`)
+`git Submodule`是一个多项目使用共同类库的工具，他允许类库项目做为repository,子项目做为一个单独的git项目存在父项目中，子项目可以有自己的独立的commit，push，pull。而父项目以Submodule的形式包含子项目，父项目可以指定子项目header，父项目中会的提交信息包含Submodule的信息，再clone父项目的时候可以把Submodule初始化。
+
+- 使用git命令可以直接添加Submodule
+```bash
+# 使用git命令可以直接添加Submodule
+> git submodule add git@github.com:catchance/smart.git themes/smart
+# 使用 git status 可以查询到多了文件需要提交
+> git status
+On branch master
+    Changes to be committed:
+        new file:   .gitmodules
+        new file:   themes/smart
+```
+- 生成的.gitmodules就是内容包含Submodule的主要信息，指定reposirory,指定路径:
+```bash
+    [submodule "themes/smart"]
+        path = themes/smart
+        url = git@github.com:catchance/smart.git
+# 使用 git submodule status 查看子项目的commit id
+> git submodule status
+ 812f406232947059eaae53875bfaf60b3156eeb8 themes/smart (heads/master)
+```
+- 这两个文件都需要提交到父项目的git中
+- 更新Submodule的两种方式
+```bash
+# 1. 在父项目的目录下直接运行
+> git submodule foreach git pull
+> git submodule foreach git pull --rebase origin master
+# 2. 在Submodule的目录下面更新
+> git pull
+```
+- clone Submodule的两种方式
+```bash
+# 1. clone父项目的时候采用 --recursive 递归的方式clone整个项目，包含所有的子项目
+> git clone <repository> --recursive
+# 2. 先clone父项目，再初始化Submodule
+> git clone <repository>
+> cd <sub-repository>
+> git submodule init
+> git submodule update
+```
+- 更新子模块
+```bash
+# 进入Submodule目录里面修改后 commit -> push 到远程服务器
+> git commit -a -m 'update submodule'
+> git push
+# 回到父目录,提交Submodule在父项目中的变动
+> git commit -m'update submodule'
+> git push
+```
+- 删除Submodule
+只需要直接删除Submodule对应的文件就可以了（.gitmodules、<sub-repository>、.git/config）
+```bash
+> cd <repository>
+> git rm --cached <sub-repository>
+> rm -rf <sub-repository>
+> rm .gitmodules
+# 删除.git/config中submodule相关的内容,然后提交到远程服务器
+> git commit -a -m <msg>
+```
+
 
 ### 命令详解
 ---
 #### `git reset`
 #### `git revert`
 Git Revert原理：根据你要回退的提交所做的改动做相反的改动，然后重新提交代码，使代码达到没有这些旧提交所能达到的状态。
-> 使用git reset是不影响远程分支的，一切都在本地发生。如果回退需要很快影响远程分支的，应该使用git revert
+
+- 使用git reset是不影响远程分支的，一切都在本地发生。如果回退需要很快影响远程分支的，应该使用git revert
 
 ### 规范
 ---
 - 如果某些文件已经被跟踪了， 再放入到.gitinore可能会失效， 用以下命令来忽略
-
   ```bash
   # 忽略文件 这个可是实现Git的分两次提交
   $ git update-index --assume-unchanged filename
   # 撤销用：
   $ git update-index --no-assume-unchanged filename
   ```
-
 - `git diff --check` 找出可能的空白错误并将它们列出来
 - 本地分支和远程分支的绑定（tracking)，加上 rebase 策略
-
   ```bash
   [branch "master"]
       remote = origin
       merge = refs/heads/master
       rebase = true
   ```
-
 - 解决多个问题，最好不要一次提交，根据任务分开提交。
-- 每次提交信息的模板
-  > 修改的摘要（50 个字符或更少）
-  >
-  > 如果必要的话，加入更详细的解释文字。在
-  > 大概 72 个字符的时候换行。在某些情形下，
-  > 第一行被当作一封电子邮件的标题，剩下的
-  > 文本作为正文。分隔摘要与正文的空行是
-  > 必须的（除非你完全省略正文）；如果你将
-  > 两者混在一起，那么类似变基等工具无法
-  > 正常工作。
-  >
-  > 空行接着更进一步的段落。
-  >
-  >  - 句号也是可以的。
-  >
-  >  - 项目符号可以使用典型的连字符或星号
-  >    前面一个空格，之间用空行隔开，
-  >    但是可以依据不同的惯例有所不同。
+- 每次提交信息的模板  
+修改的摘要（50 个字符或更少）如果必要的话，加入更详细的解释文字。在
+大概 72 个字符的时候换行。在某些情形下，第一行被当作一封电子邮件的标题，剩下的
+文本作为正文。分隔摘要与正文的空行是必须的（除非你完全省略正文）；如果你将
+两者混在一起，那么类似变基等工具无法正常工作。空行接着更进一步的段落。
+- 句号也是可以的。
+- 项目符号可以使用典型的连字符或星号
+  前面一个空格，之间用空行隔开，
+  但是可以依据不同的惯例有所不同。
