@@ -1,7 +1,7 @@
 +++
 title = "{{ replace .Name "-" " " | title }}"
 description = "description"
-keywords = ["key1", "key2"]
+keywords = ["bug", "key"]
 categories = ["category"]
 tags = ["tag"]
 date = {{ .Date }}
@@ -21,10 +21,16 @@ featured_image = ""
 > 这里是一个摘要信息    
 > 这里是另外一个摘要信息  
 <!--more-->
-
-### 相关文档
+### 问题标题
 ---
-- []()
-- []()
-- []()
+
+#### 问题（坑）描述
+
+#### Why?
+
+#### 解决
+
+#### Tips
+
+#### 相关参考
 

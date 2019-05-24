@@ -48,6 +48,10 @@ $ git --version
   - 已提交（committed） 对应 .git directory(Repository) 工作区域
   - 已修改（modified） 对应 Working Directory工作区域
   - 已暂存（staged/Index） 对应 Index/Staging Area工作区域
+- HEAD Git 中的 HEAD 可以理解为指针，指向当前仓库所处的分支，如果我们使用的是
+来切换到指定的某一次提交，HEAD 就会处于 **detached** 状态，也就是游离状态
+- up-stream git的远程仓库上的一个分支名字，（形象理解为 上游）本地新建立的分支是没有这个up-stream信息，
+所以git push的时候会提示你不能push，因为没有这个up-stream
 
 #### 配置
 - 系统级别：`/etc/gitconfig`,通过`git config --system`命令来配置
@@ -65,6 +69,11 @@ $ git config --list
 # 设置credential cache，省得多次输入密码
 $ git config --global credential.helper cache
 ```
+
+#### git引用 **^** 和 **~** 的区别
+- **`(<commit>|HEAD)^`** 代表父提交,当一个提交有多个父提交时，可以通过在`^`后面跟上一个数字，表示第几个父提交，`^`相当于`^1`。
+- **`(<commit>|HEAD)~<n>`** 指的是第n个祖先提交，用一个等式来说明就是：(<commit>|HEAD)~n = (<commit>|HEAD)^^^….(^的个数为n)。
+- checkout只会移动HEAD指针，reset会改变对应分支的引用值和HEAD的引用值。
 
 #### 获取帮助
 ```bash
@@ -203,7 +212,8 @@ $ git log --graph
 # 显示某个路径或者文件的提交历史
 $ git log -- <path>
 ```
-*git log 命令乱码的问题解决方法*
+**git log 命令乱码的问题解决方法**
+
 - git config --global i18n.commitencoding utf-8
 - git config --global i18n.logoutputencoding gbk
 - export LESSCHARSET=utf-8
@@ -251,9 +261,10 @@ $ git remote add <shortname> <url>
 #### 从远程仓库中抓取与拉取
 ```bash
 # 从远程仓库中获得数据,它并不会自动合并或修改你当前的工作
-$ git fetch [remote-name]
+> git fetch <remote-name>
 # 通常会从最初克隆的服务器上抓取数据并自动尝试合并到当前所在的分支。
-$ git pull [remote-name]
+> git pull <remote-name>
+> git pull <remote-name> --rebase 
 ```
 
 #### 推送到远程仓库
@@ -525,6 +536,21 @@ On branch master
 Git Revert原理：根据你要回退的提交所做的改动做相反的改动，然后重新提交代码，使代码达到没有这些旧提交所能达到的状态。
 
 - 使用git reset是不影响远程分支的，一切都在本地发生。如果回退需要很快影响远程分支的，应该使用git revert
+
+#### `git rebase`  
+- `git rebase --continue | --abort | --skip | --edit-todo`  
+--continue 继续rebase操作   
+--abort 终止rebase操作   
+--skip 完全忽略该提交。   
+--edit-todo
+- `git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]`
+- `git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] --root [<branch>]`
+- `git rebase <startpoint> <endpoint> --onto  <newbase>`
+    ```bash
+    # <startpoint> <endpoint> 是一个左开右闭的区间
+    # 将[90bc0045b, 5de0da9f2]之间的修改应用到master分支上
+    > git rebase 90bc0045b^ 5de0da9f2 --onto master
+    ```
 
 ### 规范
 ---
