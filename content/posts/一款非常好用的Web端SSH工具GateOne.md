@@ -67,7 +67,7 @@ Successfully Built
 
 
 #### 配合Nginx设置设置转发
-- [配置Nginx用户认证]({{< ref "posts/Nginx.md#Nginx用户验证" >}})
+- [配置Nginx用户认证]({{< ref "posts/Nginx.md" >}})
 
 - 添加nginx的配置
 
