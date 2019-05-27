@@ -1,7 +1,8 @@
 ---
 title: about
-date: 2016-10-02 00:56:45
+date: 2016-10-02T15:17:02+08:00
 type: about
+toc: false
 ---
 
 ### About me
