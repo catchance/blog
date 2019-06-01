@@ -1,24 +1,28 @@
----
-title: Git基础知识
-toc: true
-tags: ["install"]
-categories: ["git"]
-keywords: ["git"]
-description: "Git基础知识"
-draft: true
----
++++
+title = "Git基础知识"
+description = "Git基础知识"
+keywords = ["git"]
+categories = ["git"]
+tags = ["git"]
+date = 2017-05-22T10:34:14+08:00
+draft = false
+# CJKLanguage: Chinese, Japanese, Korean
+isCJKLanguage = true
+# 排序你的文章
+weight = 40
+
+# 这里还可以自定义任何参数，这些参数可以在模板中使用
+toc = true
+comments = false
+# 精选图片
+featured_image = ""
++++
+
 > 本文包括git的简介、基本使用方法、部分原理。
 > 这么好用的工具必须安利大家使用，真的是越使用越觉得其强大的功能。
 > 用过图形界面和命令行，还是命令行下面使用的得心用手，推荐大家了解原理后使用命令行。
 
 <!--more-->  
-
-### 相关文档
----
-- [git官网](https://git-scm.com/)
-- [download](https://git-scm.com/downloads)
-- [官方中文文档](https://git-scm.com/book/zh/v2)
-- [Github >> Git](https://github.com/git/git)
 
 ### 安装
 ---
@@ -579,3 +583,11 @@ Git Revert原理：根据你要回退的提交所做的改动做相反的改动�
 - 项目符号可以使用典型的连字符或星号
   前面一个空格，之间用空行隔开，
   但是可以依据不同的惯例有所不同。
+
+### 相关文档
+---
+- [git官网](https://git-scm.com/)
+- [download](https://git-scm.com/downloads)
+- [官方中文文档](https://git-scm.com/book/zh/v2)
+- [Github >> Git](https://github.com/git/git)
+

@@ -1,21 +1,28 @@
----
-title: Hexo基础知识
-toc: true
-tags: ["install"]
-categories: ["hexo"]
-draft: true
----
++++
+title = "Hexo基础知识"
+description = "Hexo基础知识"
+keywords = ["hexo"]
+categories = ["hexo"]
+tags = ["hexo"]
+date = 2016-05-22T10:34:14+08:00
+draft = false
+# CJKLanguage: Chinese, Japanese, Korean
+isCJKLanguage = true
+# 排序你的文章
+weight = 40
+
+# 这里还可以自定义任何参数，这些参数可以在模板中使用
+toc = true
+comments = false
+# 精选图片
+featured_image = ""
++++
+
 > hexo是一款基于Node.js的静态博客框架。
 > 本文主要内容包括：hexo的基本语法和使用技巧。
 > 内容大多数引用其他作者文章，已经标明引用来源。  
 
 <!--more-->
-
-### 相关文档
----
-- [hexo官网(官方文档有中文翻译)](https://hexo.io)
-- [Node.js >> hexo](https://www.npmjs.com/package/hexo)
-- [Github >> hexo](https://github.com/hexojs/hexo)
 
 ### 安装
 ---
@@ -23,7 +30,7 @@ draft: true
 - Node.js
 - git
 
-``` bash
+```bash
 $ npm install hexo-cli -g #
 $ hexo init blog #
 $ cd blog #
@@ -62,3 +69,10 @@ $ hexo generate #
 
 ### 技巧
 - 使用swig写主题模板的时候，可以通过`site.posts.sort('-updated')`进行排序
+
+### 相关文档
+---
+- [hexo官网(官方文档有中文翻译)](https://hexo.io)
+- [Node.js >> hexo](https://www.npmjs.com/package/hexo)
+- [Github >> hexo](https://github.com/hexojs/hexo)
+
