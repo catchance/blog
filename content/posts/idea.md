@@ -1,23 +1,26 @@
----
-title: idea
-toc: true
-tags: ["install", "idea", "工具"]
-categories: ["idea"]
-date: 2016-12-26 10:40:10 +08:00
-draft: true
----
++++
+title = "Idea"
+description = "description"
+keywords = ["idea"]
+categories = ["idea"]
+tags = ["idea", "tools"]
+date = 2016-12-26T14:31:58+08:00
+draft = false
+# CJKLanguage: Chinese, Japanese, Korean
+isCJKLanguage = true
+# 排序你的文章
+weight = 40
+
+# 这里还可以自定义任何参数，这些参数可以在模板中使用
+toc = true
+comments = false
+# 精选图片
+featured_image = ""
++++
+
 > idea的简介和详细使用
 
 <!--more-->
-
-### 相关文档
----
-- [Idea官网](http://www.jetbrains.com/idea/)
-
-#### 激活服务器
-- http://idea.qinxi1992.cn
-- http://www.iteblog.com/idea/key.php
-- http://idea.iteblog.com/key.php (上次激活可行)
 
 ### 安装
 ---
@@ -33,18 +36,20 @@ draft: true
 #### IDEA内存优化
 因机器本身的配置而配置：
 %IDEA_HOME%\bin\idea.exe.vmoptions
-> -Xms64m
-> -Xmx256m
-> -XX:MaxPermSize=92m
-> -ea
-> -server
-> -Dsun.awt.keepWorkingSetOnMinimize=true
-> -Dfile.encoding=UTF-8
+```bash
+-Xms64m
+-Xmx256m
+-XX:MaxPermSize=92m
+-ea
+-server
+-Dsun.awt.keepWorkingSetOnMinimize=true
+-Dfile.encoding=UTF-8
+```
 
 ### 效率快捷键的使用
 ---
-> - 使用 `|` 进行windows 和 osx 区分  
-> - `cmd` 相当于 mac中commond键
+- 使用 `|` 进行windows 和 osx 区分  
+- `cmd` 相当于 mac中commond键
 
 #### 查询快捷键  
 `Shift+Shift` **查询所有地方**  
@@ -147,6 +152,9 @@ draft: true
 [参考链接](http://blog.csdn.net/RickyIT/article/details/52956108?locationNum=9&fps=1)
 - Smart Step Into  
 在 Debug 的时候，如果一行代码中有多行语句，我们又需要进入其中的一个方法调用的话，经常做的方法是点开源代码，然后打上断点，或者直接右键 Run to Line，而不能使用快捷键快速将 Debug 的当前行进入到想要去的方法上，Intellij IDEA 提供了 Smart Step Into 的能力，只要使用 Shift + F7，就可以选择到底要 Debug 进入哪一个方法
+- Idea多线程debug  
+Idea提供了两种挂起的模式，默认的是All，会在我们调试一个线程时，屏蔽另一个线程的断点。也就是说debug模式下可能只有一个主线程在跑。多线程调试只需要选中Thread。
+[![idea-debug-20190627172854.png](https://i.postimg.cc/BZyzS1FS/idea-debug-20190627172854.png)](https://postimg.cc/Z08Hjnj2)
 
 #### idea 高级调试技巧
 [idea 高级调试技巧](http://www.cnblogs.com/yjmyzz/p/idea-advanced-debug-tips.html)
@@ -166,36 +174,45 @@ soutf
 
 ### 插件
 ---
-[插件仓库][0]
-[Key Promoter X][1]
-[.ignore][2]
-[Jindent][3]
-[CheckStyle]
-[FindBugs]
-[javadoc]
-[Maven Helper]
-[GsonFormat]json格式的内容转成Object的需求
-[IdeaVim]
-[Maven Helper]
-[JRebel]
-[AceJump] AceJump其实是一款能够代替鼠标的软件
-[VisualVM Launcher]
-[lombok]
-[IdeaJad]
-[Equals and HashCode Deluxe Generator]
-[save actions]
-[Mongo Plugin] mongo的Idea集成插件
-[Iedis] redis的集成插件  
-[CodeGlance] 类似SublimeText的Mini Map插件
-[sonarlint] 代码检查工具
-[Grep Console] 高亮log不同级别日志，看日志的时候一目了然。  
-[GenerateSerialVersionUID] Alt + Insert 生成serialVersionUID  
-[RestfulToolkit] Java WEB开发必备，再也不用全局搜索RequestMapping了。  
-[Rainbow Brackets] 彩虹括号。自动给代码块内花括号和括号加色，让视野更加注意在代码上。  
-[Alibaba Java Coding Guidelines] 阿里巴巴Java开发规约扫描插件。  
-[String Manipulation] 字符串格式风格快捷转换：大小写、驼峰、连接串等。  
-[MyBatis Log Plugin] MyBatis Log Plugin 这款插件是直接将Mybatis执行的sql脚本显示出来，无需处理，可以直接复制出来执行的  
-[Free MyBtais plugin] Free MyBtais plugin  
+- [插件仓库][0]
+- [Key Promoter X][1]
+- [.ignore][2]
+- [Jindent][3]
+- [CheckStyle]
+- [FindBugs]
+- [javadoc]
+- [Maven Helper]
+- [GsonFormat]json格式的内容转成Object的需求
+- [IdeaVim]
+- [Maven Helper]
+- [JRebel]
+- [AceJump] AceJump其实是一款能够代替鼠标的软件
+- [VisualVM Launcher]
+- [lombok]
+- [IdeaJad]
+- [Equals and HashCode Deluxe Generator]
+- [save actions]
+- [Mongo Plugin] mongo的Idea集成插件
+- [Iedis] redis的集成插件  
+- [CodeGlance] 类似SublimeText的Mini Map插件
+- [sonarlint] 代码检查工具
+- [Grep Console] 高亮log不同级别日志，看日志的时候一目了然。  
+- [GenerateSerialVersionUID] Alt + Insert 生成serialVersionUID  
+- [RestfulToolkit] Java WEB开发必备，再也不用全局搜索RequestMapping了。  
+- [Rainbow Brackets] 彩虹括号。自动给代码块内花括号和括号加色，让视野更加注意在代码上。  
+- [Alibaba Java Coding Guidelines] 阿里巴巴Java开发规约扫描插件。  
+- [String Manipulation] 字符串格式风格快捷转换：大小写、驼峰、连接串等。  
+- [MyBatis Log Plugin] MyBatis Log Plugin 这款插件是直接将Mybatis执行的sql脚本显示出来，无需处理，可以直接复制出来执行的  
+- [Free MyBtais plugin] Free MyBtais plugin  
+
+### 相关文档
+---
+- [Idea官网](http://www.jetbrains.com/idea/)
+
+#### 激活服务器
+- http://idea.qinxi1992.cn
+- http://www.iteblog.com/idea/key.php
+- http://idea.iteblog.com/key.php (上次激活可行)
 
 [0]:http://plugins.jetbrains.com/
 [1]:http://plugins.jetbrains.com/plugin?pr=idea&pluginId=1003
