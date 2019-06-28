@@ -203,7 +203,9 @@ soutf
 - [Alibaba Java Coding Guidelines] 阿里巴巴Java开发规约扫描插件。  
 - [String Manipulation] 字符串格式风格快捷转换：大小写、驼峰、连接串等。  
 - [MyBatis Log Plugin] MyBatis Log Plugin 这款插件是直接将Mybatis执行的sql脚本显示出来，无需处理，可以直接复制出来执行的  
-- [Free MyBtais plugin] Free MyBtais plugin  
+- [Free MyBtais plugin] Free MyBtais plugin
+- [MyBatisCodeHelper-Pro](https://github.com/gejun123456/MyBatisCodeHelper-Pro) Idea收费的Mybatis插件，功能相对比Free MyBatis强大[破解传送门](https://zhile.io/2019/04/23/mybatis-code-helper-pro-crack.html),[使用教程](https://www.bilibili.com/video/av50632948), 当不能正常使用的，需要检查是否与其他mybatis插件冲突
+
 
 ### 相关文档
 ---
