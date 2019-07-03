@@ -240,6 +240,130 @@ static int tieBreakOrder(Object a, Object b) {
 }
 ```
 
+### moveRootToFront
+``` java
+/**
+ * Ensures that the given root is the first node of its bin.
+ * 确保把给定的root节点设为桶中的第一个元素
+ */
+static <K,V> void moveRootToFront(Node<K,V>[] tab, TreeNode<K,V> root) {
+    int n;
+    if (root != null && tab != null && (n = tab.length) > 0) {
+        int index = (n - 1) & root.hash;
+        // first指向链表第一个节点
+        TreeNode<K,V> first = (TreeNode<K,V>)tab[index];
+        if (root != first) {
+            // 当root节点不是first节点的时候
+            Node<K,V> rn;
+            // 设置桶的第一个元素为root元素
+            tab[index] = root;
+            TreeNode<K,V> rp = root.prev;
+            if ((rn = root.next) != null)
+                // 将root的后一个节点的prev指向root的前一个节点
+                ((TreeNode<K,V>)rn).prev = rp;
+            if (rp != null)
+                // 将root的前一个节点的next指向root的后一个节点
+                rp.next = rn;
+            if (first != null)
+                // 将first节点的prev指向root
+                first.prev = root;
+            // 将root的next节点执行first
+            root.next = first;
+            // 将root的prev节点置null
+            root.prev = null;
+        }
+        //这里是防御性编程，校验更改后的结构是否满足红黑树和双链表的特性
+        //因为HashMap并没有做并发安全处理，可能在并发场景中意外破坏了结构
+        assert checkInvariants(root);
+    }
+}
+
+```
+
+### checkInvariants
+``` java
+/**
+* Recursive invariant check
+* 递归检查结构是否满足红黑树和双链表的特性
+*/
+static <K,V> boolean checkInvariants(TreeNode<K,V> t) {
+    TreeNode<K,V> tp = t.parent, tl = t.left, tr = t.right,
+        tb = t.prev, tn = (TreeNode<K,V>)t.next;
+    if (tb != null && tb.next != t)
+        // 当t的前一个节点不等于null的时候，校验前一个节点的next是否指向t
+        return false;
+    if (tn != null && tn.prev != t)
+        // 当t的后一个节点不等于null的时候，校验后一个节点的prev是否指向t
+        return false;
+    if (tp != null && t != tp.left && t != tp.right)
+        // 当t的父节点不等于null的时候，校验t是否是父节点左孩子节点或者右孩子节点
+        return false;
+    if (tl != null && (tl.parent != t || tl.hash > t.hash))
+        // t的左节点不为null的时候，判断左节点的父节点是否指向t，并且tl的hash值是否大于t的hash值
+        return false;
+    if (tr != null && (tr.parent != t || tr.hash < t.hash))
+        // t的右节点不为null的时候，判断右节点的父节点是否指向t，并且tr的hash值是否小于t的hash值
+        return false;
+    if (t.red && tl != null && tl.red && tr != null && tr.red)
+        // 当t是红的时候，判断tl不等于null，并且tl是红的，tr 不等于null 并且 tr是红的
+        // 判断满不满足红黑树的红色节点的特性
+        return false;
+    if (tl != null && !checkInvariants(tl))
+        // 当tl不等于null的时候，递归调用
+        return false;
+    if (tr != null && !checkInvariants(tr))
+        // 当tl不等于null的时候，递归调用
+        return false;
+    // 校验通过
+    return true;
+}
+```
+
+### 红黑树的左旋：rotateLeft
+[![二叉树的左旋](https://i.postimg.cc/qMFsrRRW/image.png)](https://postimg.cc/2V4bFCnx)
+``` java
+static <K,V> TreeNode<K,V> rotateLeft(TreeNode<K,V> root,
+                                      TreeNode<K,V> p) {
+    // 这里的p即上图的A节点，r指向右孩子即C，rl指向右孩子的左孩子即D，pp为p的父节点
+    TreeNode<K,V> r, pp, rl;
+    if (p != null && (r = p.right) != null) {
+        if ((rl = p.right = r.left) != null)
+            rl.parent = p;
+        if ((pp = r.parent = p.parent) == null)
+            (root = r).red = false;
+        else if (pp.left == p)
+            pp.left = r;
+        else
+            pp.right = r;
+        r.left = p;
+        p.parent = r;
+    }
+    return root;
+}
+
+```
+
+### 红黑树的右旋：rotateLeft
+``` java
+static <K,V> TreeNode<K,V> rotateRight(TreeNode<K,V> root,
+                                       TreeNode<K,V> p) {
+    TreeNode<K,V> l, pp, lr;
+    if (p != null && (l = p.left) != null) {
+        if ((lr = p.left = l.right) != null)
+            lr.parent = p;
+        if ((pp = l.parent = p.parent) == null)
+            (root = l).red = false;
+        else if (pp.right == p)
+            pp.right = l;
+        else
+            pp.left = l;
+        l.right = p;
+        p.parent = l;
+    }
+    return root;
+}
+```
+
 ### Q&A
 #### 任何减小hash碰撞
 - 如果HashMap的hash算法越散列，那么发生hash冲突的概率越低
@@ -250,4 +374,6 @@ static int tieBreakOrder(Object a, Object b) {
 - [hash函数为什么要选择对素数求余](https://blog.csdn.net/lpf463061655/article/details/85130872)
 - [HashMap JDK1.8实现原理](https://www.cnblogs.com/duodushuduokanbao/p/9492952.html)
 - [Hash冲突（哈希碰撞)](https://github.com/about-cloud/JavaCore/blob/master/resource/markdown/collection/HashConflictsAndResolve.md)
+- [Day25 史上最详细的HashMap红黑树解析](https://www.cnblogs.com/mfrank/p/9227097.html)
+- [红黑树详细分析，看了都说好](https://segmentfault.com/a/1190000012728513?utm_source=tag-newest)
 
