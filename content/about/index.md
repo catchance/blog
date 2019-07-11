@@ -3,6 +3,7 @@ title: about
 date: 2016-10-02T15:17:02+08:00
 type: about
 toc: false
+draft : true
 ---
 
 ### About me
