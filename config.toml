@@ -68,9 +68,9 @@ pygmentsCodeFences = true
 [params.social]
     GitHub = "catchance"
 #    Twitter = "xxoo"
-    Instagram = "catchancex"
-    Weibo = "xxchance"
-    Wechat = "/img/wechat.jpg"  # Wechat QRcode image
+#    Instagram = "catchancex"
+#    Weibo = "xxchance"
+#    Wechat = "/img/wechat.jpg"  # Wechat QRcode image
     Email   = "catchance@163.com"
 #    Facebook = "xxoo"
 #    Telegram = "xxoo"
