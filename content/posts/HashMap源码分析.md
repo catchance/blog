@@ -240,7 +240,7 @@ static int tieBreakOrder(Object a, Object b) {
 }
 ```
 
-### moveRootToFront
+#### moveRootToFront
 ``` java
 /**
  * Ensures that the given root is the first node of its bin.
@@ -280,7 +280,7 @@ static <K,V> void moveRootToFront(Node<K,V>[] tab, TreeNode<K,V> root) {
 
 ```
 
-### checkInvariants
+#### checkInvariants
 ``` java
 /**
 * Recursive invariant check
@@ -319,7 +319,7 @@ static <K,V> boolean checkInvariants(TreeNode<K,V> t) {
 }
 ```
 
-### 红黑树的左旋：rotateLeft
+#### 红黑树的左旋：rotateLeft
 [![二叉树的左旋](https://i.postimg.cc/qMFsrRRW/image.png)](https://postimg.cc/2V4bFCnx)
 ``` java
 static <K,V> TreeNode<K,V> rotateLeft(TreeNode<K,V> root,
@@ -327,15 +327,23 @@ static <K,V> TreeNode<K,V> rotateLeft(TreeNode<K,V> root,
     // 这里的p即上图的A节点，r指向右孩子即C，rl指向右孩子的左孩子即D，pp为p的父节点
     TreeNode<K,V> r, pp, rl;
     if (p != null && (r = p.right) != null) {
+        // 将p的右节点指向r的左节点即rl
         if ((rl = p.right = r.left) != null)
+            // 设置rl的父节点等于p
             rl.parent = p;
+        // 设置r的父节点等于p的父节点，即pp
         if ((pp = r.parent = p.parent) == null)
+            // pp等于null的时候，即p是根节点，则变换新的根节点r的颜色为黑色
             (root = r).red = false;
         else if (pp.left == p)
+            // 当pp不等于null p是pp的左节点 设置pp的左节点等于r
             pp.left = r;
         else
+            // 当pp不等于null p是pp的右节点 设置pp的右节点等于r
             pp.right = r;
+        //设置r的左节点等于p
         r.left = p;
+        // p的父节点指向r
         p.parent = r;
     }
     return root;
@@ -343,25 +351,293 @@ static <K,V> TreeNode<K,V> rotateLeft(TreeNode<K,V> root,
 
 ```
 
-### 红黑树的右旋：rotateLeft
+#### 红黑树的右旋：rotateLeft
+[![二叉树的右旋](https://i.postimg.cc/tCJ38PXh/image.png)](https://postimg.cc/nC89DX9z)
 ``` java
 static <K,V> TreeNode<K,V> rotateRight(TreeNode<K,V> root,
                                        TreeNode<K,V> p) {
+
+    //这里的p即上图的A节点，l指向左孩子即C，lr指向左孩子的右孩子即E，pp为p的父节点
     TreeNode<K,V> l, pp, lr;
     if (p != null && (l = p.left) != null) {
+        // 将p的左节点指向l的右节点即lr
         if ((lr = p.left = l.right) != null)
+            // 将lr的父节点指向p
             lr.parent = p;
+        // 将l的父节点指向p的父节点，即pp
         if ((pp = l.parent = p.parent) == null)
+            // pp等于null的时候，即p是根节点，则变换新的根节点l的颜色为黑色
             (root = l).red = false;
         else if (pp.right == p)
+            // pp 不等于null， p是pp的右节点 将pp的右节点设置成l
             pp.right = l;
         else
+            // pp 不等于null， p是pp的左节点 将pp的左节点设置成l
             pp.left = l;
+        // 将l的右节点设置成p
         l.right = p;
+        // 将p的父节点指向l
         p.parent = l;
     }
     return root;
 }
+```
+
+#### balanceInsertion
+``` java
+static <K,V> TreeNode<K,V> balanceInsertion(TreeNode<K,V> root,
+                                            TreeNode<K,V> x) {
+    x.red = true;
+    for (TreeNode<K,V> xp, xpp, xppl, xppr;;) {
+        if ((xp = x.parent) == null) { // 情况一：插入的节点N的为根节点
+            x.red = false;
+            return x;
+        }
+        else if (!xp.red || (xpp = xp.parent) == null) // 情景2，3：父节点是黑色节点或者祖父节点为null
+            return root;
+        if (xp == (xppl = xpp.left)) {  // 情景4：插入的节点父节点和祖父节点都存在，并且其父节点是祖父节点的左节点
+            if ((xppr = xpp.right) != null && xppr.red) { // 情景4i：插入节点的叔叔节点是红色
+                xppr.red = false; // 设置叔叔节点为黑色，
+                xp.red = false;   // 设置父节点为黑色，
+                xpp.red = true;   // 设置祖父节点是红色
+                x = xpp;          
+            }
+            else {                      // 情景4ii：插入节点的叔叔节点是黑色、或者不存在
+                if (x == xp.right) {    // 情景4iia：插入节点是其父节点的右孩子
+                    root = rotateLeft(root, x = xp);    // 
+                    xpp = (xp = x.parent) == null ? null : xp.parent;
+                }
+                if (xp != null) {       // 情景4iib：插入节点是其父节点的左孩子
+                    xp.red = false;
+                    if (xpp != null) {
+                        xpp.red = true;
+                        root = rotateRight(root, xpp);
+                    }
+                }
+            }
+        }
+        else { // 情景5：插入的节点父节点和祖父节点都存在，并且其父节点是祖父节点的右节点
+            if (xppl != null && xppl.red) {  // 情景5i：插入节点的叔叔节点是红色
+                xppl.red = false;
+                xp.red = false;
+                xpp.red = true;
+                x = xpp;
+            }
+            else {  // 情景5ii：插入节点的叔叔节点是黑色或不存在
+                if (x == xp.left) { // 情景5iia：插入节点是其父节点的左孩子　
+                    root = rotateRight(root, x = xp);
+                    xpp = (xp = x.parent) == null ? null : xp.parent;
+                }
+                if (xp != null) {  // 情景5iib：插入节点是其父节点的右孩子
+                    xp.red = false;
+                    if (xpp != null) {
+                        xpp.red = true;
+                        root = rotateLeft(root, xpp);
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+#### removeTreeNode
+``` java 
+final void removeTreeNode(HashMap<K,V> map, Node<K,V>[] tab,
+                          boolean movable) {
+    int n;      // tab的长度
+    if (tab == null || (n = tab.length) == 0) // tab等于null或者tab的长度等于0 直接返回
+        return;
+    int index = (n - 1) & hash; // index是索引
+    TreeNode<K,V> first = (TreeNode<K,V>)tab[index], root = first, rl; //链表的第一个节点， 设置root为第一个节点
+    TreeNode<K,V> succ = (TreeNode<K,V>)next, pred = prev; //  前驱 和 后继
+    if (pred == null)   
+        tab[index] = first = succ;
+    else
+        pred.next = succ; // 前置节点指向后置节点，跳过当前节点
+    if (succ != null)
+        succ.prev = pred;  // 后置节点不等于null的值，修改其prev指向前置，跳过当前
+    if (first == null) 
+        return;
+    if (root.parent != null)  // 寻找树的根节点root
+        root = root.root();
+    if (root == null || root.right == null ||
+        (rl = root.left) == null || rl.left == null) {
+        tab[index] = first.untreeify(map);  // too small // 太小，将树转换成链表
+        return;
+    }
+    // p是待删除节点，replacement用于后续的红黑树调整，指向的是p或者p的继承者。
+    TreeNode<K,V> p = this, pl = left, pr = right, replacement; 
+    if (pl != null && pr != null) { // p有两个孩子
+        TreeNode<K,V> s = pr, sl; // s 是继承者  sl是继承者s的左孩子
+        while ((sl = s.left) != null) // find successor  // 寻找继承者
+            s = sl;
+        boolean c = s.red; s.red = p.red; p.red = c; // swap colors // 交换p和s的颜色
+        TreeNode<K,V> sr = s.right;
+        TreeNode<K,V> pp = p.parent;
+        if (s == pr) { // p was s's direct parent  // 如果继承者s是p的右孩子
+            p.parent = s;   // 交换s和p的位置
+            s.right = p;    // 交换s和p的位置
+        }
+        else {      // 如果继承者s不是p的右孩子
+            TreeNode<K,V> sp = s.parent;
+            if ((p.parent = sp) != null) {  // p的parent指向s的parent sp
+                if (s == sp.left) // 如果 s是sp的左孩子
+                    sp.left = p;    // sp的左孩子设置为p
+                else                // 如果 s是sp的右孩子
+                    sp.right = p;   // sp的右孩子设置为p
+            }
+            if ((s.right = pr) != null)  //设置s的右节点为pr
+                pr.parent = s;      // pr的父节点设置成s
+        }
+        p.left = null; // p的左孩子置null
+        if ((p.right = sr) != null) // 将p的右孩子设置成sr
+            sr.parent = p;  // sr存在的时候，将父节点指向p
+        if ((s.left = pl) != null) // 将s的左孩子设置成p的左孩子pl
+            pl.parent = s;  // pl存在，则设置pl的父节点指向s
+        if ((s.parent = pp) == null)    //s的父节点指向p的父节点pp
+            root = s;           // 如果p为根节点，则设置s为根节点
+        else if (p == pp.left)  // 如果p是左孩子
+            pp.left = s;    // 设置pp的左孩子为s
+        else                // p是右孩子
+            pp.right = s;   // 设置 pp的右孩子为s
+        if (sr != null)     // sr不等于null的话 
+            replacement = sr; // replacement等于sr
+        else
+            replacement = p;    // replacement等于p
+    }
+    else if (pl != null) // p有一个孩子 其左孩子pl不等于null
+        replacement = pl; 
+    else if (pr != null) // p有一个孩子 其右孩子pr不等于null
+        replacement = pr; 
+    else                 // p是叶子节点
+        replacement = p;
+    // p是待删除节点，replacement用于后续的红黑树调整，指向的是p或者p的继承者。
+    // 如果p是叶子节点，p==replacement，否则replacement为p的右子树中最左节点
+    if (replacement != p) { // 若p不是叶子节点
+        TreeNode<K,V> pp = replacement.parent = p.parent; // 则让replacement的父节点指向p的父节点
+        if (pp == null)  // p是根节点
+            root = replacement;
+        else if (p == pp.left)  // p是左节点
+            pp.left = replacement; // replacement替换p成为pp的左孩子
+        else                    // p是右节点
+            pp.right = replacement;  // replacement替换p成为pp的右孩子
+        p.left = p.right = p.parent = null; // 断开p
+    }
+    
+    // 若待删除的节点p时红色的，则树平衡未被破坏，无需进行调整。
+    // 否则删除节点后需要进行调整
+    TreeNode<K,V> r = p.red ? root : balanceDeletion(root, replacement);
+
+    if (replacement == p) {  // detach //p为叶子节点，则直接将p从树中清除
+        TreeNode<K,V> pp = p.parent;
+        p.parent = null; // 断开p与其父节点pp的连接
+        if (pp != null) {
+            if (p == pp.left)
+                pp.left = null; // p是左孩子，断开其父节点pp与p的连接
+            else if (p == pp.right)
+                pp.right = null; // p是右孩子，断开其父节点pp与p的连接
+        }
+    }
+    if (movable)
+        moveRootToFront(tab, r);
+}
+```
+
+#### balanceDeletion
+``` java
+// 两个参数分别表示根节点和删除节点的继承者
+static <K,V> TreeNode<K,V> balanceDeletion(TreeNode<K,V> root,
+                                           TreeNode<K,V> x) {
+    for (TreeNode<K,V> xp, xpl, xpr;;)  {
+        if (x == null || x == root) // x为空或x为根节点，直接返回
+            return root;
+        else if ((xp = x.parent) == null) { // x为根节点，染成黑色，直接返回（因为调整过后，root并不一定指向删除操作过后的根节点，如果之前删除的是root节点，则x将成为新的根节点）
+            x.red = false;
+            return x;
+        }
+        else if (x.red) { // 如果x为红色，则无需调整，返回
+            x.red = false;
+            return root;
+        } 
+        else if ((xpl = xp.left) == x) { // x为黑色 x为其父节点的左孩子
+            if ((xpr = xp.right) != null && xpr.red) { //如果它有红色的兄弟节点xpr，那么它的父亲节点xp一定是黑色节点
+                xpr.red = false;
+                xp.red = true;
+                root = rotateLeft(root, xp); // 对父节点xp做左旋转
+                xpr = (xp = x.parent) == null ? null : xp.right; // 重新将xp指向x的父节点，xpr指向xp新的右孩子
+            }
+            if (xpr == null) // 如果xpr为空，则向上继续调整，将x的父节点xp作为新的x继续循环
+                x = xp;
+            else {
+                TreeNode<K,V> sl = xpr.left, sr = xpr.right; //sl和sr分别为其近侄子和远侄子
+                if ((sr == null || !sr.red) &&
+                    (sl == null || !sl.red)) {
+                    xpr.red = true; //若sl和sr都为黑色或者不存在，即xpr没有红色孩子，则将xpr染红
+                    x = xp; //本轮结束，继续向上循环
+                }
+                else { //否则的话，就需要进一步调整
+                    if (sr == null || !sr.red) {
+                        if (sl != null) /若左孩子为红，右孩子不存在或为黑
+                            sl.red = false; //左孩子染黑
+                        xpr.red = true; //将xpr染红
+                        root = rotateRight(root, xpr);   //右旋
+                        xpr = (xp = x.parent) == null ?
+                            null : xp.right; //右旋后，xpr指向xp的新右孩子，即上一步中的sl
+                    }
+                    if (xpr != null) {
+                        xpr.red = (xp == null) ? false : xp.red; //xpr染成跟父节点一致的颜色，为后面父节点xp的左旋做准备
+                        if ((sr = xpr.right) != null)
+                            sr.red = false; //xpr新的右孩子染黑，防止出现两个红色相连
+                    }
+                    if (xp != null) {
+                        xp.red = false; //将xp染黑，并对其左旋，这样就能保证被删除的X所在的路径又多了一个黑色节点，从而达到恢复平衡的目的
+                        root = rotateLeft(root, xp);
+                    }
+                    //到此调整已经完毕，进入下一次循环后将直接退出
+                    x = root;
+                }
+            }
+        }
+        else { // symmetric //x为黑色 x为其父节点的右孩子，跟上面类似
+            if (xpl != null && xpl.red) {
+                xpl.red = false;
+                xp.red = true;
+                root = rotateRight(root, xp);
+                xpl = (xp = x.parent) == null ? null : xp.left;
+            }
+            if (xpl == null)
+                x = xp;
+            else {
+                TreeNode<K,V> sl = xpl.left, sr = xpl.right;
+                if ((sl == null || !sl.red) &&
+                    (sr == null || !sr.red)) {
+                    xpl.red = true;
+                    x = xp;
+                }
+                else {
+                    if (sl == null || !sl.red) {
+                        if (sr != null)
+                            sr.red = false;
+                        xpl.red = true;
+                        root = rotateLeft(root, xpl);
+                        xpl = (xp = x.parent) == null ?
+                            null : xp.left;
+                    }
+                    if (xpl != null) {
+                        xpl.red = (xp == null) ? false : xp.red;
+                        if ((sl = xpl.left) != null)
+                            sl.red = false;
+                    }
+                    if (xp != null) {
+                        xp.red = false;
+                        root = rotateRight(root, xp);
+                    }
+                    x = root;
+                }
+            }
+        }
+    }
 ```
 
 ### Q&A
