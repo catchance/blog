@@ -37,13 +37,21 @@ featured_image = ""
 因机器本身的配置而配置：
 %IDEA_HOME%\bin\idea.exe.vmoptions
 ```bash
--Xms64m
--Xmx256m
--XX:MaxPermSize=92m
--ea
--server
--Dsun.awt.keepWorkingSetOnMinimize=true
+-Xms1024m
+-Xmx4096m
+-XX:MaxPermSize=1024m
+-XX:ReservedCodeCacheSize=240m
 -Dfile.encoding=UTF-8
+-XX:+UseConcMarkSweepGC
+-XX:SoftRefLRUPolicyMSPerMB=50
+-ea
+-Dsun.io.useCanonCaches=false
+-Djava.net.preferIPv4Stack=true
+-Djdk.http.auth.tunneling.disabledSchemes=""
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:-OmitStackTraceInFastThrow
+# 破解程序
+-javaagent:D:\tools\JetBrains\jetbrains-agent.jar
 ```
 
 ### 效率快捷键的使用
@@ -171,6 +179,12 @@ soutf
 ### 常见问题
 - 解决idea 控制台中文乱码
 [参考链接](https://jingyan.baidu.com/article/046a7b3ea33e25f9c27fa93d.html)
+- 运行maven、gradle的时候run控制台窗口乱码
+[IDEA控制台乱码解决](https://www.cnblogs.com/liaoyanglong/p/6639039.html)
+tomcat输出到控制台（console）出现中文乱码，设置Run/Debug Configuration中设置environment variables 来解决。
+Idea=>Run=>Edit Configuration，弹出的对话框中，在Startup/Connection 中Run中添加environment variables
+JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8.
+设置Run/Debug Configuration中设置VM options -Dfile.encoding=UTF-8
 
 ### 插件
 ---

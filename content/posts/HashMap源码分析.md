@@ -561,9 +561,9 @@ static <K,V> TreeNode<K,V> balanceDeletion(TreeNode<K,V> root,
             return root;
         } 
         else if ((xpl = xp.left) == x) { // x为黑色 x为其父节点的左孩子
-            if ((xpr = xp.right) != null && xpr.red) { //如果它有红色的兄弟节点xpr，那么它的父亲节点xp一定是黑色节点
-                xpr.red = false;
-                xp.red = true;
+            if ((xpr = xp.right) != null && xpr.red) { // 情景2i：如果它有红色的兄弟节点xpr，那么它的父亲节点xp一定是黑色节点
+                xpr.red = false;  // 互换sp和spr的节点颜色：将spr染成黑色
+                xp.red = true;    // 互换sp和spr的节点颜色：将sp染成红色
                 root = rotateLeft(root, xp); // 对父节点xp做左旋转
                 xpr = (xp = x.parent) == null ? null : xp.right; // 重新将xp指向x的父节点，xpr指向xp新的右孩子
             }
