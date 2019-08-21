@@ -41,12 +41,32 @@ static final int UNTREEIFY_THRESHOLD = 6;
 // 链表树化的最低容量，当数组的容量小于这个的时候，不会进行树化，只会进行扩容
 static final int MIN_TREEIFY_CAPACITY = 64;
 
+/**
+ * Fail-Fast 机制 
+ * 我们知道 java.util.HashMap 不是线程安全的，因此如果在使用迭代器的过程中有其他线程修改了map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast策略。这一策略在源码中的实现是通过 modCount 域，modCount 顾名思义就是修改次数，对HashMap 内容的修改都将增加这个值，那么在迭代器初始化过程中会将这个值赋给迭代器的 expectedModCount。在迭代过程中，判断 modCount 跟 expectedModCount 是否相等，如果不相等就表示已经有其他线程修改了 Map：注意到 modCount 声明为 volatile，保证线程之间修改的可见性。
+ **/
+transient int modCount;
+
 //能容纳最多key_value对的个数
 int threshold;
 
 //一共key_value对个数
 int size;
 ```
+
+### 快速失败（fail—fast）/安全失败（fail—safe）
+---
+#### 快速失败（fail—fast）
+- 在用迭代器遍历一个集合对象时，如果遍历过程中对集合对象的内容进行了修改（增加、删除、修改），则会抛出Concurrent Modification Exception。
+迭代器在遍历时直接访问集合中的内容，并且在遍历过程中使用一个 modCount 变量。集合在被遍历期间如果内容发生变化，就会改变modCount的值。每当迭代器使用hashNext()/next()遍历下一个元素之前，都会检测modCount变量是否为expectedmodCount值，是的话就返回遍历；否则抛出异常，终止遍历。
+- 注意：这里异常的抛出条件是检测到 modCount！=expectedmodCount 这个条件。如果集合发生变化时修改modCount值刚好又设置为了expectedmodCount值，则异常不会抛出。因此，不能依赖于这个异常是否抛出而进行并发操作的编程，这个异常只建议用于检测并发修改的bug。
+- 场景：java.util包下的集合类都是快速失败的，不能在多线程下发生并发修改（迭代过程中被修改）。
+
+#### 安全失败（fail—safe）
+- 采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问的，而是先复制原有集合内容，在拷贝的集合上进行遍历。
+- 原理：由于迭代时是对原集合的拷贝进行遍历，所以在遍历过程中对原集合所作的修改并不能被迭代器检测到，所以不会触发Concurrent Modification Exception。
+- 缺点：基于拷贝内容的优点是避免了Concurrent Modification Exception，但同样地，迭代器并不能访问到修改后的内容，即：迭代器遍历的是开始遍历那一刻拿到的集合拷贝，在遍历期间原集合发生的修改迭代器是不知道的。
+- 场景：java.util.concurrent包下的容器都是安全失败，可以在多线程下并发使用，并发修改。
 
 ### 方法详解
 #### hash
@@ -641,9 +661,18 @@ static <K,V> TreeNode<K,V> balanceDeletion(TreeNode<K,V> root,
 ```
 
 ### Q&A
+---
 #### 任何减小hash碰撞
 - 如果HashMap的hash算法越散列，那么发生hash冲突的概率越低
 - 如果数组越大，那么发生hash冲突的概率也会越低，但是数组越大带来的空间开销越多，但是遍历速度越快，这就要在空间和时间上进行权衡
+
+#### HashMap的死循环
+jdk之前版本的transfer方法实现的机制就是将每个链表转化到新链表，并且链表中的位置发生反转，而这在多线程情况下是很容易造成链表回路，从而发生 get() 死循环。所以只要保证建新链时还是按照原来的顺序的话就不会产生循环（JDK 8 的改进）
+- [HashMap 在高并发下引起的死循环](https://www.jianshu.com/p/619a8efcf589)
+
+#### 数据丢失的问题
+- 如果多个线程同时使用 put 方法添加元素，而且假设正好存在两个 put 的 key 发生了碰撞（根据 hash 值计算的 bucket 一样），那么根据 HashMap 的实现，这两个 key 会添加到数组的同一个位置，这样最终就会发生其中一个线程 put 的数据被覆盖
+- 如果多个线程同时检测到元素个数超过数组大小 * loadFactor，这样就会发生多个线程同时对 Node 数组进行扩容，都在重新计算元素位置以及复制数据，但是最终只有一个线程扩容后的数组会赋给 table，也就是说其他线程的都会丢失，并且各自线程 put 的数据也丢失
 
 ### 相关文档
 ---
