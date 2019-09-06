@@ -163,6 +163,16 @@ featured_image = ""
 - Idea多线程debug  
 Idea提供了两种挂起的模式，默认的是All，会在我们调试一个线程时，屏蔽另一个线程的断点。也就是说debug模式下可能只有一个主线程在跑。多线程调试只需要选中Thread。
 [![idea-debug-20190627172854.png](https://i.postimg.cc/BZyzS1FS/idea-debug-20190627172854.png)](https://postimg.cc/Z08Hjnj2)
+- idea查看代码中的修改记录（粒度：行）  
+代码编辑器>>打断点的地方>>右键>>Annotate
+[![idea-git.png](https://i.postimg.cc/7ZmWnvNq/idea-git.png)](https://postimg.cc/RWJdvD8Y)
+- IntelliJ IDEA 同一项目使用多个git管理多个分支（不同项目 多模块 pull 更新 push 推送 操作）
+[IntelliJ IDEA 同一项目使用多个git管理多个分支（不同项目 多模块 pull 更新 push 推送 操作）](https://blog.csdn.net/weimingjue/article/details/88424758)
+1.右下角的Git分支栏点开
+2.旁边有个设置点开并勾选“Execute branch operations on all roots”
+但是如果AB有master和develop而C只有master这时想切换成develop（不需要C了）怎么办？
+1.idea打开A或B的任意一个文件（这也是bug。。。目的是为了让idea的焦点不在C上）
+2.依然是设置>version control（不用展开），选中C点击“-”号将C去掉，然后确定
 
 #### idea 高级调试技巧
 [idea 高级调试技巧](http://www.cnblogs.com/yjmyzz/p/idea-advanced-debug-tips.html)
@@ -219,6 +229,7 @@ JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8.
 - [MyBatis Log Plugin] MyBatis Log Plugin 这款插件是直接将Mybatis执行的sql脚本显示出来，无需处理，可以直接复制出来执行的  
 - [Free MyBtais plugin] Free MyBtais plugin
 - [MyBatisCodeHelper-Pro](https://github.com/gejun123456/MyBatisCodeHelper-Pro) Idea收费的Mybatis插件，功能相对比Free MyBatis强大[破解传送门](https://zhile.io/2019/04/23/mybatis-code-helper-pro-crack.html),[使用教程](https://www.bilibili.com/video/av50632948), 当不能正常使用的，需要检查是否与其他mybatis插件冲突
+- [GenerateSerialVersionUID]()
 
 
 ### 相关文档
